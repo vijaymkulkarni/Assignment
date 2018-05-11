@@ -1,7 +1,7 @@
 ﻿using System;
 using ContactMgmtCommon;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using ContactMgmtSerivce;
+using ContactMgmtService;
 
 namespace UnitTestProject1
 {

@@ -12,6 +12,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using EvolentHealthContactMgmt;
 
 namespace ContactMgmt
 {
@@ -23,6 +24,11 @@ namespace ContactMgmt
         public MainWindow()
         {
             InitializeComponent();
+            List<User> items = new List<User>();
+            items.Add(new User() { Name = "John Doe", Age = 42 });
+            items.Add(new User() { Name = "Jane Doe", Age = 39 });
+            items.Add(new User() { Name = "Sammy Doe", Age = 13 });
+            lvDataBinding.DataContext = items;
         }
     }
 }

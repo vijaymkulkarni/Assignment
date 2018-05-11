@@ -9,7 +9,7 @@ using System.ServiceModel;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ContactMgmtSerivce
+namespace ContactMgmtService
 {
     /// <summary>
     /// 
@@ -59,49 +59,61 @@ namespace ContactMgmtSerivce
             try
             {
                 if (_loginCreditials == null)
-                {
-                    var exception = GetInvalidCreditalException();
-                    throw new FaultException<CustomException>(exception);
-                }
+                    return false; //GetInvalidCreditalException();
                 else
                 {
                     var errorMessages = _loginCreditials.Validate();
                     if (!string.IsNullOrEmpty(errorMessages))
-                    {
-                        //var exception = GetInvalidCreditalException();
-                        //throw new FaultException<CustomException>(exception);
                         return false;
-                    }
 
                     DataAccessLayer dataAccessLayer = null;
                     dataAccessLayer = GetDataAccessLayer();
 
-                    if (dataAccessLayer == null) return false;
+                    if (dataAccessLayer == null)
+                        return false;
+
                     string filterExpression = string.Concat("Name = '", CreditialsLoginInfo.LoginName, 
                                                             "' and Password ='" + CreditialsLoginInfo.Password, "'");
                     DataRow table = dataAccessLayer.GetData(filterExpression);
-                    if (table != null) return true;
+                    if (table != null)
+                        return true;
+                    else
+                        return false; //RaiseCustomFaultException("Provided user/password do not match, please try again.");
                 }
             }
-            catch (Exception ex)
+            //catch (System.ServiceModel.FaultException<CustomException>)
+            //{
+            //    throw; 
+            //}
+            catch (Exception)
             {
-                RaiseFaultException(ex);
+                throw;
             }
             return false;
         }
 
-        private static void RaiseFaultException(Exception ex)
-        {
-            var exception = new CustomException
-            {
-                ExceptionMessage = ex.Message,
-                Title = "Exception"
-            };
-            if (ex.InnerException != null) exception.InnerException = ex.InnerException.ToString();
-            exception.StackTrace = ex.StackTrace;
-            throw new FaultException<CustomException>(exception);
-        }
-        
+        //private static void RaiseFaultException(Exception ex)
+        //{
+        //    var exception = new CustomException
+        //    {
+        //        ExceptionMessage = ex.Message,
+        //        Title = "Exception"
+        //    };
+        //    if (ex.InnerException != null) exception.InnerException = ex.InnerException.ToString();
+        //    exception.StackTrace = ex.StackTrace;
+        //    throw new FaultException<CustomException>(exception);
+        //}
+
+        //private static void RaiseCustomFaultException(string exceptionMessage)
+        //{
+        //    var exception = new CustomException
+        //    {
+        //        ExceptionMessage = exceptionMessage,
+        //        Title = "Exception"
+        //    };
+        //    throw new FaultException<CustomException>(exception);
+        //}
+
         private DataAccessLayer GetDataAccessLayer()
         {
             DataAccessLayer dataAccessLayer = null;

@@ -36,15 +36,16 @@
         <Label Grid.Column="0" Grid.Row="2" Content="Login Name" Height="32" 
                HorizontalAlignment="Right" Margin="0,6,0,18" Width="auto" Padding="0,0,0,0" 
                FontFamily="Verdana" FontSize="14" HorizontalContentAlignment="Center"/>
-        <TextBox Grid.Column="1" Grid.Row="2" x:Name="TLoginUserName" Margin="50,0,0,18" TextWrapping="Wrap" Text="" 
+        <TextBox Grid.Column="1" Grid.Row="2" x:Name="TLoginUserName" Margin="50,0,0,18" TextWrapping="Wrap"   
                  HorizontalAlignment="Left" Width="262" VerticalContentAlignment="Center"/>
         <Label Grid.Column="0" Grid.Row="2" Content="Password" HorizontalAlignment="Right" Margin="0,46,0,0" VerticalAlignment="Top" Height="32" Padding="0,0,0,0" FontFamily="Verdana" FontSize="14" Grid.RowSpan="2"/>
         <PasswordBox Grid.Column="1" Grid.Row="3"  x:Name="TPasswordBox" 
                      HorizontalAlignment="Left" Height="32" Margin="50,0,0,0" VerticalAlignment="Top" 
-                     Width="262" Padding="0" Password="" IsInactiveSelectionHighlightEnabled="True" 
+                     Width="262" Padding="0" Password="" 
+                     IsInactiveSelectionHighlightEnabled="True" 
                      VerticalContentAlignment="Center"/>
-        <Button Grid.Column="1" Content="Sign In" Grid.Row="4" HorizontalAlignment="Left" Margin="50,0,0,0" VerticalAlignment="Top" Width="77" Height="25">
-        </Button>
+        <Button Grid.Column="1" Content="Sign In" Grid.Row="4" HorizontalAlignment="Left" x:Name="LogOn"
+                Margin="50,0,0,0" VerticalAlignment="Top" Width="77" Height="25" Click="LogOn_OnClick"/>
         <Label Grid.Column="0" Grid.Row="5" Grid.ColumnSpan="2" 
                Content="If you are unable to sign in or if you do not have account, please contact your administrator." Height="Auto" HorizontalAlignment="Center" 
                Margin="10,25,26,0" Width="auto" Padding="0,0,0,0" FontFamily="Verdana" FontSize="12" Foreground="#FF322D2D"/>

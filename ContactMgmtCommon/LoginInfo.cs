@@ -74,17 +74,17 @@ namespace ContactMgmtCommon
             if (mc.Count > 0)
                 errorMessages.AppendLine("Password is invalid");
 
-            //var context = new ValidationContext(this, serviceProvider: null, items: null);
-            //var results = new List<ValidationResult>();
+            var context = new ValidationContext(this, serviceProvider: null, items: null);
+            var results = new List<ValidationResult>();
 
-            //var isValid = Validator.TryValidateObject(this, context, results);
+            var isValid = Validator.TryValidateObject(this, context, results);
 
-            //if (isValid) return errorMessages.ToString();
+            if (isValid) return errorMessages.ToString();
 
-            //foreach (var validationResult in results)
-            //{
-            //    errorMessages.AppendLine(validationResult.ErrorMessage);
-            //}
+            foreach (var validationResult in results)
+            {
+                errorMessages.AppendLine(validationResult.ErrorMessage);
+            }
             return errorMessages.ToString();
         }
     }

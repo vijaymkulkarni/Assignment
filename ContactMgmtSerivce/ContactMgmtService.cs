@@ -4,9 +4,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using ContactMgmtSerivce;
+using ContactMgmtService;
 
-namespace ContactMgmtSerivce
+namespace ContactMgmtService
 {
     /// <summary>
     /// 

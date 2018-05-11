@@ -7,7 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ContactMgmtSerivce
+namespace ContactMgmtService
 {
     internal class SqlDataMgr : DataAccessLayer
     {

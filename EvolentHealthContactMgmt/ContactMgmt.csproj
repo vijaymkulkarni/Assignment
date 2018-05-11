@@ -143,5 +143,11 @@
       <Install>false</Install>
     </BootstrapperPackage>
   </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\ContactMgmtCommon\ContactMgmtCommon.csproj">
+      <Project>{de3663be-d3c4-4b8a-9376-48644ba7f881}</Project>
+      <Name>ContactMgmtCommon</Name>
+    </ProjectReference>
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

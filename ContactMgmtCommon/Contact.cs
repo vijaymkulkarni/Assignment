@@ -5,21 +5,39 @@ using System.Text;
 
 namespace ContactMgmtCommon
 {
+    /// <summary>
+    /// 
+    /// </summary>
     [DataContract]
     public class Contact
     {
+        private string _firstName;
+        private string _lastName;
+        private string _emailaddress;
+        private string _phoneNumber;
+        private bool _status;
 
-        string _firstName;
-        string _lastName;
-        string _emailaddress;
-        string _phoneNumber;
-        bool _status;
-
+        /// <summary>
+        /// 
+        /// </summary>
         public Contact()
         {
 
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="contactFirstName"></param>
+        /// <param name="contactLastName"></param>
+        /// <param name="emailaddress"></param>
+        /// <param name="phoneNumber"></param>
+        /// <param name="status"></param>
+        /// <param name="firstName"></param>
+        /// <param name="lastName"></param>
+        /// <param name="emailAddress"></param>
+        /// <param name="phonenNumber"></param>
+        /// <param name="contactStatus"></param>
         public Contact(string contactFirstName, string contactLastName, string emailaddress, string phoneNumber, bool status, string firstName, string lastName, string emailAddress, string phonenNumber, bool contactStatus)
         {
             _firstName = contactFirstName;
@@ -29,9 +47,12 @@ namespace ContactMgmtCommon
             _status = contactStatus;
         }
 
-        //First Name
+        /// <summary>
+        /// 
+        /// </summary>
         [DataMember]
         [Required(ErrorMessage = "First Name Required")]
+        [RegularExpression("[A-Za-z\\s]*", ErrorMessage = "First Name is invalid")]
         [StringLength(100, ErrorMessage = "Maximum 100 characters allowed for First Name")]
         public string FirstName
         {
@@ -39,17 +60,22 @@ namespace ContactMgmtCommon
             set { _firstName = value; }
         }
 
-        //Last Name
+        /// <summary>
+        /// 
+        /// </summary>
         [DataMember]
         [Required(ErrorMessage = "Last Name Required")]
         [StringLength(100, ErrorMessage = "Maximum 100 characters allowed for Last Name")]
+        [RegularExpression("[A-Za-z\\s]*", ErrorMessage = "Last Name is invalid")]
         public string LastName
         {
             get { return _lastName; }
             set { _lastName = value; }
         }
 
-        //Email
+        /// <summary>
+        /// 
+        /// </summary>
         [DataMember]
         [Required(ErrorMessage = "Email Address Required")]
         [RegularExpression("^([0-9a-zA-Z]([-\\.\\w]*[0-9a-zA-Z])*@([0-9a-zA-Z][-\\w]*[0-9a-zA-Z]\\.)+[a-zA-Z]{2,9})$", ErrorMessage = "Email address is invalid")]
@@ -59,7 +85,9 @@ namespace ContactMgmtCommon
             set { _emailaddress = value; }
         }
 
-        //Phone Number
+        /// <summary>
+        /// 
+        /// </summary>
         [DataMember]
         [Required(ErrorMessage = "Phonen Number Required")]
         [RegularExpression(@"^((\+\d{1,3}(-| )?\(?\d\)?(-| )?\d{1,5})|(\(?\d{2,6}\)?))(-| )?(\d{3,4})(-| )?(\d{4})(( x| ext)\d{1,5}){0,1}$", ErrorMessage = "Phone Number is invalid")]
@@ -69,7 +97,9 @@ namespace ContactMgmtCommon
             set { _phoneNumber = value; }
         }
 
-        //Status(Possible values: Active/Inactive)
+        /// <summary>
+        /// Status(Possible values: Active/Inactive)
+        /// </summary>
         [DataMember]
         public bool Status
         {
@@ -77,20 +107,22 @@ namespace ContactMgmtCommon
             set { _status = value; }
         }        
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <returns></returns>
         public string Validate()
         {
-            StringBuilder errorMessages = new StringBuilder();
+            var errorMessages = new StringBuilder();
             var context = new ValidationContext(this, serviceProvider: null, items: null);
             var results = new List<System.ComponentModel.DataAnnotations.ValidationResult>();
 
             var isValid = Validator.TryValidateObject(this, context, results);
 
-            if (!isValid)
+            if (isValid) return errorMessages.ToString();
+            foreach (var validationResult in results)
             {
-                foreach (var validationResult in results)
-                {
-                    errorMessages.AppendLine(validationResult.ErrorMessage);
-                }
+                errorMessages.AppendLine(validationResult.ErrorMessage);
             }
             return errorMessages.ToString();
         }

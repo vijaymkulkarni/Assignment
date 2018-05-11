@@ -46,6 +46,7 @@
     <Compile Include="Contact.cs" />
     <Compile Include="CustomException.cs" />
     <Compile Include="IContactService.cs" />
+    <Compile Include="ILoginService.cs" />
     <Compile Include="LoginInfo.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

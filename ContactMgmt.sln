@@ -9,6 +9,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ContactMgmtCommon", "Contac
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ContactMgmtService", "ContactMgmtSerivce\ContactMgmtService.csproj", "{1801418F-71FB-4578-8740-14467872A9B1}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UnitTestProject1", "UnitTestProject1\UnitTestProject1.csproj", "{4C888C1F-8FEA-4A7E-8D4F-D403F2F8376E}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -27,6 +29,10 @@ Global
 		{1801418F-71FB-4578-8740-14467872A9B1}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{1801418F-71FB-4578-8740-14467872A9B1}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{1801418F-71FB-4578-8740-14467872A9B1}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4C888C1F-8FEA-4A7E-8D4F-D403F2F8376E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4C888C1F-8FEA-4A7E-8D4F-D403F2F8376E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4C888C1F-8FEA-4A7E-8D4F-D403F2F8376E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4C888C1F-8FEA-4A7E-8D4F-D403F2F8376E}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

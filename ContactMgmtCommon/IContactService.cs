@@ -14,10 +14,7 @@ namespace ContactMgmtCommon
     [ServiceContract]
     public interface IContactService
     {
-        [OperationContract]
-        [FaultContract(typeof(CustomException))]
-        void ValidateLogin(LoginInfo loginCreditials);
-
+    
         [OperationContract]
         [FaultContract(typeof(CustomException))]
         void InsertContact(Contact contactInfo);
@@ -36,7 +33,7 @@ namespace ContactMgmtCommon
 
         [OperationContract]
         [FaultContract(typeof(CustomException))]
-        void GetAllContacts();
+        List<Contact> GetAllContacts();
     }
 
 }

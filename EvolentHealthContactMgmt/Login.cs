@@ -9,13 +9,7 @@ namespace ContactMgmt
     {
         public Login()
         {
-            InitializeComponent();
-
-            //ContactMgmtCommon.Contact c = new ContactMgmtCommon.Contact();
-            //c.EmailAddress = "ASDF";
-
-            //var msg = c.Validate();
-            //MessageBox.Show(msg);            
+            InitializeComponent();         
         }
     }
 }

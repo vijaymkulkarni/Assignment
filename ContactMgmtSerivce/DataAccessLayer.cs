@@ -26,7 +26,7 @@ namespace ContactMgmtSerivce
 
         public abstract DataTable GetAllData();
 
-        public abstract DataTable GetData();
+        public abstract DataRow GetData(string filterExpression);
 
         public abstract DataTable InsertData();
 

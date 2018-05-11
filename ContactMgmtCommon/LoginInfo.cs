@@ -2,6 +2,7 @@
 using System.ComponentModel.DataAnnotations;
 using System.Runtime.Serialization;
 using System.Text;
+using System.Text.RegularExpressions;
 
 namespace ContactMgmtCommon
 {
@@ -38,23 +39,23 @@ namespace ContactMgmtCommon
         /// </summary>
         [DataMember]
         [Required(ErrorMessage = "Login Name is missing")]
-        [RegularExpression("[A-Za-z0-9]*", ErrorMessage = "Login Name is invalid")]
+        [RegularExpression("[^a-zA-Z0-9]*", ErrorMessage = "Login Name is invalid")]
         public string LoginName
         {
-            get { return _loginName; }
-            set { _loginName = value; }
+            get => _loginName;
+            set => _loginName = value;
         }
 
         /// <summary>
         /// 
         /// </summary>
         [DataMember]
-        [RegularExpression("[A-Za-z0-9#$^&@!~%=_]*", ErrorMessage = "Password is invalid")]
+        [RegularExpression("[^A-Za-z0-9#$^&@!~%=_]*", ErrorMessage = "Password is invalid")]
         [Required(ErrorMessage = "Password is missing")]
         public string Password
         {
-            get { return _password; }
-            set { _password = value; }
+            get => _password;
+            set => _password = value;
         }
 
         /// <summary>
@@ -64,17 +65,26 @@ namespace ContactMgmtCommon
         public string Validate()
         {
             var errorMessages = new StringBuilder();
-            var context = new ValidationContext(this, serviceProvider: null, items: null);
-            var results = new List<ValidationResult>();
+            Regex re = new Regex(@"[^a-zA-Z0-9]");
+            MatchCollection mc = re.Matches(LoginName);
+            if (mc.Count > 0)
+                errorMessages.AppendLine("Login Name is invalid");
+            re = new Regex(@"[^^A-Za-z0-9#$^&@!~%=_]");
+            mc = re.Matches(Password);
+            if (mc.Count > 0)
+                errorMessages.AppendLine("Password is invalid");
 
-            var isValid = Validator.TryValidateObject(this, context, results);
+            //var context = new ValidationContext(this, serviceProvider: null, items: null);
+            //var results = new List<ValidationResult>();
 
-            if (isValid) return errorMessages.ToString();
+            //var isValid = Validator.TryValidateObject(this, context, results);
 
-            foreach (var validationResult in results)
-            {
-                errorMessages.AppendLine(validationResult.ErrorMessage);
-            }
+            //if (isValid) return errorMessages.ToString();
+
+            //foreach (var validationResult in results)
+            //{
+            //    errorMessages.AppendLine(validationResult.ErrorMessage);
+            //}
             return errorMessages.ToString();
         }
     }

@@ -121,7 +121,7 @@ namespace ContactMgmtSerivce
             throw new NotImplementedException();
         }
 
-        public override DataTable GetData()
+        public override DataRow GetData(string filterExpression)
         {
             throw new NotImplementedException();
         }

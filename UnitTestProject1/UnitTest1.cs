@@ -8,22 +8,37 @@ namespace UnitTestProject1
     [TestClass]
     public class UnitTest1
     {
+
         [TestMethod]
         public void InvalidLogin()
         {
-            try
-            {
-                ILoginService contactMgmt = new AppLoginManager();
-                contactMgmt.ValidateLogin(new LoginInfo("vijay", "vijaymk"));
-            }
-            catch (Exception ex)
-            {
+            ILoginService contactMgmt = new AppLoginManager();
+            bool returnValue = contactMgmt.ValidateLogin(new LoginInfo("vijay", "vijaymk"));
+            Assert.AreEqual(returnValue, false);
+        }
 
-            }
-            finally
-            {
+        [TestMethod]
+        public void ValidLogin()
+        {
+            ILoginService contactMgmt = new AppLoginManager();
+            bool returnValue = contactMgmt.ValidateLogin(new LoginInfo("vijay", "vijay#1975~"));
+            Assert.AreEqual(returnValue, true);
+        }
+        
+        [TestMethod]
+        public void InValidLoginName()
+        {
+            ILoginService contactMgmt = new AppLoginManager();
+            bool returnValue = contactMgmt.ValidateLogin(new LoginInfo("v#ijay", "vijay#1975~"));
+            Assert.AreEqual(returnValue, false);
+        }
 
-            }
+        [TestMethod]
+        public void InValidPassword()
+        {
+            ILoginService contactMgmt = new AppLoginManager();
+            bool returnValue = contactMgmt.ValidateLogin(new LoginInfo("vijay", "vijay#*1975~"));
+            Assert.AreEqual(returnValue, false);
         }
     }
 }

@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Configuration;
 using System.Data;
+using System.Diagnostics;
 using System.Linq;
 using System.ServiceModel;
 using System.Text;
@@ -17,16 +18,16 @@ namespace ContactMgmtSerivce
     {
         private LoginInfo _loginCreditials;
 
-        private static string _connectionType;
+        private string _connectionType;
         private const string ConnectionTypeKey = "connectionType";
 
-        public static string ConnectionType
+        public string ConnectionType
         {
             get
             {
-                if (_connectionType == string.Empty)
+                if (string.IsNullOrEmpty(_connectionType))
                 {
-                    _connectionType = ConfigurationManager.ConnectionStrings[ConnectionTypeKey].ConnectionString;
+                    _connectionType = ConfigurationManager.AppSettings[ConnectionTypeKey];
                 }
                 return _connectionType;
             }
@@ -47,9 +48,75 @@ namespace ContactMgmtSerivce
             set => _loginCreditials = value;
         }
 
-        public void ValidateLogin(LoginInfo loginCreditials)
+        public bool ValidateLogin(LoginInfo loginCreditials)
         {
             _loginCreditials = loginCreditials;
+            return ValidateLogin();
+        }
+        
+        public bool ValidateLogin()
+        {
+            try
+            {
+                if (_loginCreditials == null)
+                {
+                    var exception = GetInvalidCreditalException();
+                    throw new FaultException<CustomException>(exception);
+                }
+                else
+                {
+                    var errorMessages = _loginCreditials.Validate();
+                    if (!string.IsNullOrEmpty(errorMessages))
+                    {
+                        //var exception = GetInvalidCreditalException();
+                        //throw new FaultException<CustomException>(exception);
+                        return false;
+                    }
+
+                    DataAccessLayer dataAccessLayer = null;
+                    dataAccessLayer = GetDataAccessLayer();
+
+                    if (dataAccessLayer == null) return false;
+                    string filterExpression = string.Concat("Name = '", CreditialsLoginInfo.LoginName, 
+                                                            "' and Password ='" + CreditialsLoginInfo.Password, "'");
+                    DataRow table = dataAccessLayer.GetData(filterExpression);
+                    if (table != null) return true;
+                }
+            }
+            catch (Exception ex)
+            {
+                RaiseFaultException(ex);
+            }
+            return false;
+        }
+
+        private static void RaiseFaultException(Exception ex)
+        {
+            var exception = new CustomException
+            {
+                ExceptionMessage = ex.Message,
+                Title = "Exception"
+            };
+            if (ex.InnerException != null) exception.InnerException = ex.InnerException.ToString();
+            exception.StackTrace = ex.StackTrace;
+            throw new FaultException<CustomException>(exception);
+        }
+        
+        private DataAccessLayer GetDataAccessLayer()
+        {
+            DataAccessLayer dataAccessLayer = null;
+
+            // ReSharper disable once StringCompareIsCultureSpecific.1
+            if (String.Compare(ConnectionType.Trim().ToUpper(), "TEXT") == 0)
+            {
+                dataAccessLayer = new FileSystemDataMgr("logins.xml");
+            }
+            // ReSharper disable once StringCompareIsCultureSpecific.1
+            else if (String.Compare(ConnectionType.Trim().ToUpper(), "SQL") == 0)
+            {
+                dataAccessLayer = new SqlDataMgr();
+            }
+            return dataAccessLayer;
         }
         
         CustomException GetInvalidCreditalException()
@@ -61,41 +128,6 @@ namespace ContactMgmtSerivce
                 Title = "Invalid Creditials"
             };
             return exception;
-        }
-
-        public bool ValidateLogin()
-        {
-            if (_loginCreditials == null)
-            {
-                var exception = GetInvalidCreditalException();
-                throw new FaultException<CustomException>(exception); ;
-            }
-            else
-            {
-                DataAccessLayer dataAccessLayer = null;
-                dataAccessLayer = GetDataAccessLayer();
-
-                if (dataAccessLayer == null) return false;
-                DataTable table = dataAccessLayer.GetAllData(); 
-            }
-            return false;
-        }
-
-        private static DataAccessLayer GetDataAccessLayer()
-        {
-            DataAccessLayer dataAccessLayer = null;
-            // ReSharper disable once StringCompareIsCultureSpecific.1
-            if (String.Compare(ConnectionType, "TEXT") == 0)
-            {
-                dataAccessLayer = new FileSystemDataMgr();
-            }
-            // ReSharper disable once StringCompareIsCultureSpecific.1
-            else if (String.Compare(ConnectionType, "SQL") == 0)
-            {
-                dataAccessLayer = new SqlDataMgr();
-            }
-
-            return dataAccessLayer;
         }
     }
 }

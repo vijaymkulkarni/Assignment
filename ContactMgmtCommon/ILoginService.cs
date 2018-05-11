@@ -19,7 +19,7 @@ namespace ContactMgmtCommon
         /// <param name="loginCreditials"></param>
         [OperationContract]
         [FaultContract(typeof(CustomException))]
-        void ValidateLogin(LoginInfo loginCreditials);
+        bool ValidateLogin(LoginInfo loginCreditials);
 
     }
 }

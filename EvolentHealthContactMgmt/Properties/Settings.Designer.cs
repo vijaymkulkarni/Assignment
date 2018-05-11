@@ -8,7 +8,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace EvolentHealthContactMgmt.Properties
+namespace ContactMgmt.Properties
 {
 
 

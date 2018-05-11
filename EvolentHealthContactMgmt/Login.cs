@@ -12,7 +12,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 
-namespace EvolentHealthContactMgmt
+namespace ContactMgmt
 {
     /// <summary>
     /// Interaction logic for Login.xaml

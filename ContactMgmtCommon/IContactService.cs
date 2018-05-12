@@ -12,7 +12,7 @@ namespace ContactMgmtCommon
     /// </summary>
     /// 
     [ServiceContract]
-    public interface IContactService
+    public interface IContactService : IDisposable
     {
     
         [OperationContract]

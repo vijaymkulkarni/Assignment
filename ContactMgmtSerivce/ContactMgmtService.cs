@@ -122,5 +122,10 @@ namespace ContactMgmtService
         {
             throw new NotImplementedException();
         }
+
+        public void Dispose()
+        {
+            //this.Dispose();
+        }
     }
 }

@@ -9,6 +9,40 @@
         WindowStartupLocation="CenterScreen" ResizeMode="NoResize">
     <Window.Resources>
         <vw:ContactsViewModel x:Key="ContactVwModel"/>
+        <Style TargetType="Button" x:Key="CmdButton">
+            <Setter Property="Margin" Value="0,0,0,0"/>
+            <Setter Property="HorizontalAlignment" Value="Center"/>
+            <Setter Property="VerticalAlignment" Value="Center"/>
+            <Setter Property="Width" Value="75"/>
+            <Setter Property="SnapsToDevicePixels" Value="True" />
+            <Setter Property="Foreground" Value="Black" />
+            <Setter Property="Background" Value="DarkGray" />
+            <Setter Property="Height" Value="35" />
+            <Setter Property="FontSize" Value="16" />
+            <Setter Property="FontFamily" Value="Calibri" />
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="{x:Type Button}">
+                        <Border Background="{TemplateBinding Background}"
+                                BorderBrush="LightBlue" 
+                                BorderThickness="1" CornerRadius="15,15,15,15" x:Name="bd">
+                            <ContentPresenter HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" 
+                                              Margin="{TemplateBinding Padding}" 
+                                              VerticalAlignment="{TemplateBinding VerticalContentAlignment}" 
+                                              SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" 
+                                              RecognizesAccessKey="True" />
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter TargetName="bd" Property="Background" Value="LightGray"/>
+                                <Setter Property="Foreground" Value="White" />
+                                <Setter Property="Cursor" Value="Hand" />
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
     </Window.Resources>
     <Window.DataContext>
         <vw:ContactsViewModel/>
@@ -26,23 +60,25 @@
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="20"/>
         </Grid.RowDefinitions>
-        <DataGrid Grid.ColumnSpan="5" Grid.Row="0" ItemsSource="{Binding Contacts}" CanUserAddRows="False" AutoGenerateColumns="False" x:Name="LvContact" Height="Auto" Margin="0,0,0,0" VerticalAlignment="Top" >
+        <DataGrid Grid.ColumnSpan="5" Grid.Row="0" HorizontalScrollBarVisibility="Hidden" VerticalScrollBarVisibility="Auto"
+                  ItemsSource="{Binding Contacts}" CanUserAddRows="False" AutoGenerateColumns="False" x:Name="LvContact">
+            <!--<Trigger>
+                <Trigger.Setters>
+
+                </Trigger.Setters>
+            </Trigger>-->
             <DataGrid.Columns>
-                <DataGridCheckBoxColumn Header="Select" Width="5*" Binding="{Binding IsSelected, Mode=TwoWay}" ></DataGridCheckBoxColumn>
-                <DataGridTextColumn Header="First Name" Width="10*" Binding="{Binding FirstName, Mode=TwoWay}"/>
-                <DataGridTextColumn Header="Last Name" Width="10*" Binding="{Binding LastName, Mode=TwoWay}" />
-                <DataGridTextColumn Header="Phone Number" Width="10*" Binding="{Binding PhoneNumber, Mode=TwoWay}" />
-                <DataGridTextColumn Header="Email Address" Width="10*" IsReadOnly="False" Binding="{Binding EmailAddress, Mode=TwoWay}" />
-                <DataGridComboBoxColumn Header="Status" Width="5*" 
-                                        SelectedItemBinding="{Binding Path=Status, Mode=TwoWay}"
-                                        ItemsSource="{Binding Path=Status, Mode=TwoWay}" />
+                <DataGridCheckBoxColumn Header="Select" Width="50" Binding="{Binding IsSelected, Mode=TwoWay}"/>
+                <DataGridTextColumn Header="First Name" Width="*" IsReadOnly="True" Binding="{Binding FirstName, Mode=OneWay}"/>
+                <DataGridTextColumn Header="Last Name" Width="*" IsReadOnly="True" Binding="{Binding LastName, Mode=OneWay}" />
+                <DataGridTextColumn Header="Phone Number" Width="*" IsReadOnly="True" Binding="{Binding PhoneNumber, Mode=OneWay}" />
+                <DataGridTextColumn Header="Email Address" Width="*" IsReadOnly="True" Binding="{Binding EmailAddress, Mode=OneWay}" />
+                <DataGridTextColumn Header="Status" Width="*" IsReadOnly="True" Binding="{Binding Path=Status, Mode=OneWay}"/>
             </DataGrid.Columns>
         </DataGrid>
-        <Button Content="Add" Grid.Column="0" Grid.Row="1" Command="{Binding AddCommand}" 
-                HorizontalAlignment="Center" Margin="0,0,0,0" VerticalAlignment="Center" Width="75"/>
-        <Button Content="Update" Grid.Column="1" Grid.Row="1" Command="{Binding UpdateCommand}" 
-                HorizontalAlignment="Center" Margin="0,0,0,0" VerticalAlignment="Center" Width="75"/>
-        <Button Content="Delete" Grid.Column="2" Grid.Row="1" Command="{Binding DeleteCommand}" HorizontalAlignment="Center" Margin="0,0,0,0" VerticalAlignment="Center" Width="75"/>
-        <Button Content="Exit" Grid.Column="4" Grid.Row="1" Command="{Binding ExitCommand}"  CommandParameter="{Binding ElementName=MainWindow}" HorizontalAlignment="Center" Margin="0,0,0,0" VerticalAlignment="Center"  Width="75"/>
+        <Button Content="Add" Grid.Column="0" Grid.Row="1" Command="{Binding AddCommand}" Style="{StaticResource CmdButton}"/>
+        <Button Content="Update" Grid.Column="1" Grid.Row="1" Command="{Binding UpdateCommand}" Style="{StaticResource CmdButton}" />
+        <Button Content="Delete" Grid.Column="2" Grid.Row="1" Command="{Binding DeleteCommand}" Style="{StaticResource CmdButton}"/>
+        <Button Content="Exit" Grid.Column="4" Grid.Row="1" Command="{Binding ExitCommand}" Style="{StaticResource CmdButton}"/>
     </Grid>
 </Window>

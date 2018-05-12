@@ -38,7 +38,8 @@
                FontFamily="Verdana" FontSize="14" HorizontalContentAlignment="Center"/>
         <TextBox Grid.Column="1" Grid.Row="2" x:Name="TLoginUserName" Margin="50,0,0,18" TextWrapping="Wrap"   
                  HorizontalAlignment="Left" Width="262" VerticalContentAlignment="Center"/>
-        <Label Grid.Column="0" Grid.Row="2" Content="Password" HorizontalAlignment="Right" Margin="0,46,0,0" VerticalAlignment="Top" Height="32" Padding="0,0,0,0" FontFamily="Verdana" FontSize="14" Grid.RowSpan="2"/>
+        <Label Grid.Column="0" Grid.Row="2" Content="Password" HorizontalAlignment="Right" Margin="0,46,0,0" 
+               VerticalAlignment="Top" Height="32" Padding="0,0,0,0" FontFamily="Verdana" FontSize="14" Grid.RowSpan="2"/>
         <PasswordBox Grid.Column="1" Grid.Row="3"  x:Name="TPasswordBox" 
                      HorizontalAlignment="Left" Height="32" Margin="50,0,0,0" VerticalAlignment="Top" 
                      Width="262" Padding="0" Password="" 

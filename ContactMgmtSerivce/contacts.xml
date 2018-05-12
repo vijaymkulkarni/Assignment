@@ -1,2 +1,5 @@
-﻿<Contacts
-Vijay,kulkarni,vijaymkulkarni@outlook.com,+919923206508
+﻿<Contacts>
+  <Contact FirstName="vijay" LastName="Kulkarni" EmailAddress="vijaymkulkarni@outlook.com" PhonenNumber="+919923206508" Status="True"/>
+  <Contact FirstName="Madhusudan" LastName="Kulkarni" EmailAddress="vijaymkulkarni@outlook.com" PhonenNumber="+919822366508" Status="True"/>
+  <Contact FirstName="Pushpa" LastName="Kulkarni" EmailAddress="vijaymkulkarni@outlook.com" PhonenNumber="+919822776508" Status="True"/>
+</Contacts>

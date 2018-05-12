@@ -11,6 +11,7 @@ namespace ContactMgmtCommon
     [DataContract]
     public class Contact
     {
+        private bool _selected;
         private string _firstName;
         private string _lastName;
         private string _emailaddress;
@@ -47,6 +48,13 @@ namespace ContactMgmtCommon
             _status = contactStatus;
         }
 
+        [DataMember]
+        public bool IsSelected
+        {
+            get => _selected;
+            set => _selected = value;
+        }
+
         /// <summary>
         /// 
         /// </summary>
@@ -56,8 +64,8 @@ namespace ContactMgmtCommon
         [StringLength(100, ErrorMessage = "Maximum 100 characters allowed for First Name")]
         public string FirstName
         {
-            get { return _firstName; }
-            set { _firstName = value; }
+            get => _firstName;
+            set => _firstName = value;
         }
 
         /// <summary>
@@ -69,8 +77,8 @@ namespace ContactMgmtCommon
         [RegularExpression("[A-Za-z\\s]*", ErrorMessage = "Last Name is invalid")]
         public string LastName
         {
-            get { return _lastName; }
-            set { _lastName = value; }
+            get => _lastName;
+            set => _lastName = value;
         }
 
         /// <summary>
@@ -81,20 +89,20 @@ namespace ContactMgmtCommon
         [RegularExpression("^([0-9a-zA-Z]([-\\.\\w]*[0-9a-zA-Z])*@([0-9a-zA-Z][-\\w]*[0-9a-zA-Z]\\.)+[a-zA-Z]{2,9})$", ErrorMessage = "Email address is invalid")]
         public string EmailAddress
         {
-            get { return _emailaddress; }
-            set { _emailaddress = value; }
+            get => _emailaddress;
+            set => _emailaddress = value;
         }
 
         /// <summary>
         /// 
         /// </summary>
         [DataMember]
-        [Required(ErrorMessage = "Phonen Number Required")]
+        [Required(ErrorMessage = "Phone Number Required")]
         [RegularExpression(@"^((\+\d{1,3}(-| )?\(?\d\)?(-| )?\d{1,5})|(\(?\d{2,6}\)?))(-| )?(\d{3,4})(-| )?(\d{4})(( x| ext)\d{1,5}){0,1}$", ErrorMessage = "Phone Number is invalid")]
-        public string PhonenNumber
+        public string PhoneNumber
         {
-            get { return _phoneNumber; }
-            set { _phoneNumber = value; }
+            get => _phoneNumber;
+            set => _phoneNumber = value;
         }
 
         /// <summary>
@@ -103,8 +111,8 @@ namespace ContactMgmtCommon
         [DataMember]
         public bool Status
         {
-            get { return _status; }
-            set { _status = value; }
+            get => _status;
+            set => _status = value;
         }        
 
         /// <summary>

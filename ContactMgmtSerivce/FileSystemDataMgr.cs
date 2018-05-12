@@ -26,21 +26,22 @@ namespace ContactMgmtService
         
         public override DataTable GetAllData()
         {
-            var table = ReadLoginFile();
+            var table = _fileName == "login.xml" ? new DataTable("Login") : new DataTable("Contacts");
+            ReadFile(ref table);
             return table.Rows.Count > 0 ? table : null;
         }
 
         public override DataRow GetData(string filterExpression)
         {
-            var table = ReadLoginFile();
+            var table = _fileName == "login.xml" ? new DataTable("Login") : new DataTable("Contacts");
+            ReadFile(ref table);
             DataRow[] dataRow = table.Select(filterExpression);
             return dataRow.Length > 0 ? dataRow[0] : null;
         }
 
-        private DataTable ReadLoginFile()
+        private DataTable ReadFile(ref DataTable table)
         {
-            //create the DataTable that will hold the data
-            DataTable table = new DataTable("Login");
+            //create the DataTable that will hold the data            
             try
             {
                 if (string.IsNullOrEmpty(_fileName)) return table;
@@ -51,8 +52,8 @@ namespace ContactMgmtService
                     using (DataSet ds = new DataSet())
                     {
                         ds.ReadXml(stream);
-                        table= ds.Tables[0];
-                    }                    
+                        table = ds.Tables[0];
+                    }
                     //return the results
                     return table;
                 }
@@ -61,7 +62,7 @@ namespace ContactMgmtService
             {
                 return table;
             }
-        }
+        }        
 
         public override DataTable InsertData()
         {

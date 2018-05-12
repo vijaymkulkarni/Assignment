@@ -3,42 +3,46 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:local="clr-namespace:ContactMgmt"
+        xmlns:vw="clr-namespace:ContactMgmt"
         mc:Ignorable="d"
-        Title="MainWindow" Height="500" Width="800" WindowStartupLocation="CenterScreen" ResizeMode="NoResize">
+        Title="MainWindow" Height="500" Width="800" 
+        WindowStartupLocation="CenterScreen" ResizeMode="NoResize">
+    <Window.Resources>
+        <vw:ContactsViewModel x:Key="ContactVwModel"/>
+    </Window.Resources>
+    <Window.DataContext>
+        <vw:ContactsViewModel/>
+    </Window.DataContext>
     <Grid>
-        <DataGrid x:Name="lvDataBinding" Height="Auto" Margin="0,0,0,0" VerticalAlignment="Top" >
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="20*"></ColumnDefinition>
+            <ColumnDefinition Width="20*"></ColumnDefinition>
+            <ColumnDefinition Width="20*"></ColumnDefinition>
+            <ColumnDefinition Width="20*"></ColumnDefinition>
+            <ColumnDefinition Width="20*"></ColumnDefinition>
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="20"/>
+        </Grid.RowDefinitions>
+        <DataGrid Grid.ColumnSpan="5" Grid.Row="0" ItemsSource="{Binding Contacts}" CanUserAddRows="False" AutoGenerateColumns="False" x:Name="LvContact" Height="Auto" Margin="0,0,0,0" VerticalAlignment="Top" >
             <DataGrid.Columns>
-                <DataGridCheckBoxColumn Header="Select" Width="5*" Binding="{Binding IsSelected}" ></DataGridCheckBoxColumn>
-                <DataGridTextColumn Header="First Name" Width="10*" Binding="{Binding FirstName}"/>
-                <DataGridTextColumn Header="Last Name" Width="10*" Binding="{Binding LastName}" />
-                <DataGridTextColumn Header="Phone Number" Width="10*" Binding="{Binding FirstName}" />
-                <DataGridTextColumn Header="Email Address" Width="10*" IsReadOnly="False" Binding="{Binding LastName}" />
+                <DataGridCheckBoxColumn Header="Select" Width="5*" Binding="{Binding IsSelected, Mode=TwoWay}" ></DataGridCheckBoxColumn>
+                <DataGridTextColumn Header="First Name" Width="10*" Binding="{Binding FirstName, Mode=TwoWay}"/>
+                <DataGridTextColumn Header="Last Name" Width="10*" Binding="{Binding LastName, Mode=TwoWay}" />
+                <DataGridTextColumn Header="Phone Number" Width="10*" Binding="{Binding PhoneNumber, Mode=TwoWay}" />
+                <DataGridTextColumn Header="Email Address" Width="10*" IsReadOnly="False" Binding="{Binding EmailAddress, Mode=TwoWay}" />
                 <DataGridComboBoxColumn Header="Status" Width="5*" 
-                                        SelectedItemBinding="{Binding Path=Status}"
-                                        ItemsSource="{Binding Path=Status}" />
-                <DataGridComboBoxColumn></DataGridComboBoxColumn>
+                                        SelectedItemBinding="{Binding Path=Status, Mode=TwoWay}"
+                                        ItemsSource="{Binding Path=Status, Mode=TwoWay}" />
             </DataGrid.Columns>
         </DataGrid>
-        <Button Content="Add" HorizontalAlignment="Left" Margin="40,295,0,0" VerticalAlignment="Top" Width="75"/>
-        <Button Content="Update" HorizontalAlignment="Left" Margin="130,295,0,0" VerticalAlignment="Top" Width="75"/>
-        <Button Content="Delete" HorizontalAlignment="Left" Margin="225,295,0,0" VerticalAlignment="Top" Width="75"/>
-        <Button Content="Exit" HorizontalAlignment="Right" Margin="315,295,0,0" VerticalAlignment="Top" Width="75"/>
-        <!--<ListView Margin="10" Name="lvDataBinding">
-            <ListView.ItemTemplate>
-                <DataTemplate>
-                    <WrapPanel>
-                        <TextBlock Text="Name: " />
-                        <TextBlock Text="{Binding Name}" FontWeight="Bold" />
-                        <TextBlock Text=", " />
-                        <TextBlock Text="Age: " />
-                        <TextBlock Text="{Binding Age}" FontWeight="Bold" />
-                        <TextBlock Text=" (" />
-                        <TextBlock Text="{Binding Mail}" TextDecorations="Underline" Foreground="Blue" Cursor="Hand" />
-                        <TextBlock Text=")" />
-                    </WrapPanel>
-                </DataTemplate>
-            </ListView.ItemTemplate>
-        </ListView>-->
+        <Button Content="Add" Grid.Column="0" Grid.Row="1" Command="{Binding AddCommand}" 
+                HorizontalAlignment="Center" Margin="0,0,0,0" VerticalAlignment="Center" Width="75"/>
+        <Button Content="Update" Grid.Column="1" Grid.Row="1" Command="{Binding UpdateCommand}" 
+                HorizontalAlignment="Center" Margin="0,0,0,0" VerticalAlignment="Center" Width="75"/>
+        <Button Content="Delete" Grid.Column="2" Grid.Row="1" Command="{Binding DeleteCommand}" HorizontalAlignment="Center" Margin="0,0,0,0" VerticalAlignment="Center" Width="75"/>
+        <Button Content="Exit" Grid.Column="4" Grid.Row="1" Command="{Binding ExitCommand}"  CommandParameter="{Binding ElementName=MainWindow}" HorizontalAlignment="Center" Margin="0,0,0,0" VerticalAlignment="Center"  Width="75"/>
     </Grid>
 </Window>

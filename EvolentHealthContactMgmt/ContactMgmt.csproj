@@ -6,7 +6,7 @@
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProjectGuid>{1BED830F-66BE-495A-8B15-750E164790F2}</ProjectGuid>
     <OutputType>WinExe</OutputType>
-    <RootNamespace>EvolentHealthContactMgmt</RootNamespace>
+    <RootNamespace>ContactMgmt</RootNamespace>
     <AssemblyName>EvolentHealthContactMgmt</AssemblyName>
     <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
@@ -96,6 +96,7 @@
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="ViewModel\DelegateCommand.cs" />
     <Compile Include="View\Login.cs" />
     <Compile Include="ViewModel\ContactsViewModel.cs" />
     <Compile Include="View\MainWindow.xaml.cs">

@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
 VisualStudioVersion = 15.0.27130.2036
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ContactMgmt", "EvolentHealthContactMgmt\ContactMgmt.csproj", "{1BED830F-66BE-495A-8B15-750E164790F2}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ContactMgmt", "ContactMgmt\ContactMgmt.csproj", "{1BED830F-66BE-495A-8B15-750E164790F2}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ContactMgmtCommon", "ContactMgmtCommon\ContactMgmtCommon.csproj", "{DE3663BE-D3C4-4B8A-9376-48644BA7F881}"
 EndProject

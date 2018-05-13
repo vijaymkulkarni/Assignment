@@ -1,26 +1,16 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Runtime.Serialization;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Runtime.Serialization;
 
 namespace ContactMgmtCommon
 {
-
-    [DataContract()]
+    [DataContract]
     public class CustomException
     {
-        [DataMember()]
-        public string Title;
+        [DataMember] public string ExceptionMessage;
 
-        [DataMember()]
-        public string ExceptionMessage;
+        [DataMember] public string InnerException;
 
-        [DataMember()]
-        public string InnerException;
+        [DataMember] public string StackTrace;
 
-        [DataMember()]
-        public string StackTrace;
+        [DataMember] public string Title;
     }
 }

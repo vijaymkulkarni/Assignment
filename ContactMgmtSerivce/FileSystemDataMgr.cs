@@ -1,18 +1,15 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Configuration;
 using System.Data;
 using System.IO;
-using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
+using System.Xml;
 
 namespace ContactMgmtService
 {
     /// <summary>
     /// 
     /// </summary>
-    internal class FileSystemDataMgr : DataAccessLayer
+    internal class FileSystemDataMgr : DataAccessLayerBase
     {
         private readonly string _fileName;
         
@@ -38,45 +35,114 @@ namespace ContactMgmtService
             DataRow[] dataRow = table.Select(filterExpression);
             return dataRow.Length > 0 ? dataRow[0] : null;
         }
-
-        private DataTable ReadFile(ref DataTable table)
+        
+        public override void InsertData(ref DataTable table)
         {
-            //create the DataTable that will hold the data            
-            try
-            {
-                if (string.IsNullOrEmpty(_fileName)) return table;
+            if (table == null) return;
 
-                //open the file using a Stream
-                using (Stream stream = new FileStream(_fileName, FileMode.Open, FileAccess.Read))
+            DataTable existingTable = new DataTable();
+            ReadFile(ref existingTable);
+            if (existingTable.Rows.Count > 0)
+            {
+                foreach (DataRow dataRow in table.Rows)
                 {
-                    using (DataSet ds = new DataSet())
+
+                    DataRow newRow = existingTable.NewRow();
+                    Random rnd = new Random();
+                    newRow[0] = rnd.Next();
+                    for (int columnsIndex = 1; columnsIndex < table.Columns.Count; columnsIndex++)
                     {
-                        ds.ReadXml(stream);
-                        table = ds.Tables[0];
+                        newRow[columnsIndex] = dataRow[columnsIndex];
                     }
-                    //return the results
-                    return table;
+
+                    existingTable.Rows.Add(newRow);
                 }
             }
-            catch (Exception ex)
+            else
             {
-                return table;
+                existingTable = table;
             }
-        }        
-
-        public override DataTable InsertData()
+            WriteToTable(existingTable);
+            table = existingTable;
+        }
+        
+        public override void UpdateData(ref DataTable table)
         {
-            throw new NotImplementedException();
+            DataTable existingTable = new DataTable();
+            ReadFile(ref existingTable);
+            foreach (DataRow dataRow in table.Rows)
+            {
+                string filterExpression = string.Concat("ID = ", dataRow[0]);
+                DataRow[] rows = existingTable.Select(filterExpression);
+
+                foreach (DataRow existingTableDataRow in rows)
+                {
+                    for(int columnIndex = 0; columnIndex < existingTable.Columns.Count; columnIndex++)
+                    {
+                        existingTableDataRow[columnIndex] = dataRow[columnIndex];
+                    }
+                }
+            }
+            WriteToTable(existingTable);
+            table = existingTable;
         }
 
-        public override DataTable UpdateData()
+        public override void DeleteData(ref DataTable table)
         {
-            throw new NotImplementedException();
+            DataTable existingTable = new DataTable();
+            ReadFile(ref existingTable);
+            foreach (DataRow dataRow in table.Rows)
+            {
+                string filterExpression = string.Concat("ID = ", dataRow[0]);
+                DataRow[] rows = existingTable.Select(filterExpression);
+                foreach (DataRow existingTableDataRow in rows)
+                {
+                    existingTableDataRow.Delete();
+                }
+            }
+            WriteToTable(existingTable);
+            table = existingTable;
         }
 
-        public override DataTable DeleteData()
+        #region Private Helper Routines
+
+        private void ReadFile(ref DataTable table)
         {
-            throw new NotImplementedException();
+            //create the DataTable that will hold the data            
+
+            if (string.IsNullOrEmpty(_fileName)) return;
+
+            using (TextReader tr = new StreamReader(_fileName))
+            {
+                using (DataSet ds = new DataSet())
+                {
+                    ds.ReadXml(tr);
+                    if (ds.Tables.Count == 1)
+                        table = ds.Tables[0];
+                }
+                tr.Close();
+            }
         }
+
+        private void WriteToTable(DataTable existingTable)
+        {
+            if (string.IsNullOrEmpty(_fileName)) return;
+
+            DataSet ds = existingTable.DataSet;
+            if (ds == null)
+            {
+                ds = new DataSet();
+                ds.Tables.Add(existingTable);
+            }
+
+            using (XmlTextWriter xmlWrite = new XmlTextWriter(_fileName, Encoding.UTF8))
+                ds.WriteXml(xmlWrite);
+
+            existingTable = new DataTable();
+            ReadFile(ref existingTable);            
+        }
+
+        #endregion
+
     }
 }

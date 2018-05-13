@@ -1,97 +1,171 @@
-﻿using ContactMgmtCommon;
+﻿using System;
+using System.Collections.Generic;
 using System.ComponentModel;
+using System.Windows;
 using System.Windows.Input;
+using ContactMgmtCommon;
 
 namespace ContactMgmt
 {
     public class ContactViewModel : INotifyPropertyChanged
     {
+        public event PropertyChangedEventHandler PropertyChanged;
+
+        public event EventHandler CloseWindow;
+
+        private void RaisePropertyChanged(string property)
+        {
+            if (PropertyChanged != null) PropertyChanged(this, new PropertyChangedEventArgs(property));
+        }
+
+        #region Properties
+
+        public class ContactStatus
+        {
+            public ContactStatus(string name)
+            {
+                StatusName = name;
+            }
+
+            public string StatusName { get; set; }
+        }
+
+        private List<ContactStatus> _contactStatuses;
+
+        public List<ContactStatus> ContactStatuses
+        {
+            get
+            {
+                IList<ContactStatus> list = new List<ContactStatus>
+                {
+                    new ContactStatus("Active"),
+                    new ContactStatus("In-Active")
+                };
+                _contactStatuses = new List<ContactStatus>(list);
+                return _contactStatuses;
+            }
+            set => _contactStatuses = value;
+        }
+
         private Contact _contactInfo;
 
-        /// <summary>
-        /// 
-        /// </summary>
-        public ContactViewModel()
+        public Contact ContactInfo
         {
-
+            get => _contactInfo == null ? _contactInfo = new Contact() : _contactInfo;
+            set
+            {
+                _contactInfo = value;
+                RaisePropertyChanged("ContactInfo");
+            }
         }
 
         /// <summary>
-        /// 
         /// </summary>
-        /// <param name="contactInfo"></param>
-        public void Contact(Contact contactInfo)
+        public long ContactId
         {
-            _contactInfo = contactInfo;
+            get => ContactInfo.ContactId;
+            set
+            {
+                ContactInfo.ContactId = value;
+                RaisePropertyChanged("ContactId");
+            }
         }
-        
+
         /// <summary>
-        /// 
         /// </summary>
         public string FirstName
         {
-            get => _contactInfo.FirstName;
-            set => _contactInfo.FirstName = value;
+            get => ContactInfo.FirstName;
+            set
+            {
+                ContactInfo.FirstName = value;
+                RaisePropertyChanged("FirstName");
+            }
         }
 
         /// <summary>
-        /// 
         /// </summary>
         public string LastName
         {
-            get => _contactInfo.LastName;
-            set => _contactInfo.LastName = value;
+            get => ContactInfo.LastName;
+            set
+            {
+                ContactInfo.LastName = value;
+                RaisePropertyChanged("LastName");
+            }
         }
 
         /// <summary>
-        /// 
         /// </summary>
         public string EmailAddress
         {
-            get => _contactInfo.EmailAddress;
-            set => _contactInfo.EmailAddress = value;
+            get => ContactInfo.EmailAddress;
+            set
+            {
+                ContactInfo.EmailAddress = value;
+                RaisePropertyChanged("EmailAddress");
+            }
         }
 
         /// <summary>
-        /// 
         /// </summary>
         public string PhoneNumber
         {
-            get => _contactInfo.PhoneNumber;
-            set => _contactInfo.PhoneNumber = value;
+            get => ContactInfo.PhoneNumber;
+            set
+            {
+                ContactInfo.PhoneNumber = value;
+                RaisePropertyChanged("PhoneNumber");
+            }
         }
 
         /// <summary>
-        /// Status(Possible values: Active/Inactive)
+        ///     Status(Possible values: Active/Inactive)
         /// </summary>
-        public bool Status
+        public string Status
         {
-            get => _contactInfo.Status;
-            set => _contactInfo.Status = value;
+            get => ContactInfo.Status;
+            set
+            {
+                ContactInfo.Status = value;
+                RaisePropertyChanged("Status");
+            }
         }
+
+        #endregion
+
+        #region Command Implmentation
 
         public ICommand SaveCommand => new DelegateCommand(Save_Command);
 
         private void Save_Command(object sender)
         {
+            var errorMsg = _contactInfo.Validate();
+            if (string.IsNullOrEmpty(errorMsg))
+            {
+                using (IContactService contactMgmt = new ContactMgmtService.ContactMgmtService())
+                {
+                    if (_contactInfo.ContactId > 0)
+                        contactMgmt.UpdateContact(ref _contactInfo);
+                    else
+                        contactMgmt.InsertContact(ref _contactInfo);
+                }
 
+                if (CloseWindow != null) CloseWindow(sender, null);
+            }
+            else
+            {
+                MessageBox.Show(errorMsg, "Validation Error", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
         }
 
         public ICommand CancelCommand => new DelegateCommand(Cancel_Command);
 
         private void Cancel_Command(object sender)
         {
-
+            if (CloseWindow != null) CloseWindow(sender, null);
         }
 
-        public event PropertyChangedEventHandler PropertyChanged;
-
-        private void RaisePropertyChanged(string property)
-        {
-            if (PropertyChanged != null)
-            {
-                PropertyChanged(this, new PropertyChangedEventArgs(property));
-            }
-        }
+        #endregion
     }
 }

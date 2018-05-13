@@ -1,4 +1,5 @@
 ﻿using System;
+using System.ServiceModel;
 using System.Windows;
 using ContactMgmtCommon;
 using ContactMgmtService;
@@ -6,13 +7,13 @@ using ContactMgmtService;
 namespace ContactMgmt
 {
     /// <summary>
-    /// Interaction logic for Login.xaml
+    ///     Interaction logic for Login.xaml
     /// </summary>
     public partial class Login : Window
     {
         public Login()
         {
-            InitializeComponent();         
+            InitializeComponent();
         }
 
         private void LogOn_OnClick(object sender, RoutedEventArgs e)
@@ -20,17 +21,20 @@ namespace ContactMgmt
             try
             {
                 ILoginService contactMgmt = new AppLoginManager();
-                var returnValue = contactMgmt.ValidateLogin(new LoginInfo(TLoginUserName.Text, TPasswordBox.Password)); 
+                var returnValue = contactMgmt.ValidateLogin(new LoginInfo(TLoginUserName.Text, TPasswordBox.Password));
                 if (!returnValue)
-                    MessageBox.Show("Invalid login name / password, please try again.", "Contact Manager Sign In", MessageBoxButton.OK, MessageBoxImage.Error);
+                {
+                    MessageBox.Show("Invalid login name / password, please try again.", "Contact Manager Sign In",
+                        MessageBoxButton.OK, MessageBoxImage.Error);
+                }
                 else
                 {
-                    MainWindow mainWindow = new MainWindow();
-                    this.Close();
+                    var mainWindow = new MainWindow();
+                    Close();
                     mainWindow.ShowDialog();
                 }
             }
-            catch (System.ServiceModel.FaultException<CustomException> ex)
+            catch (FaultException<CustomException> ex)
             {
                 MessageBox.Show(ex.Message, "Exception");
             }

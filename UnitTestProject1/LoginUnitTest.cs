@@ -1,12 +1,11 @@
-﻿using System;
-using ContactMgmtCommon;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
+﻿using ContactMgmtCommon;
 using ContactMgmtService;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace UnitTestProject1
 {
     [TestClass]
-    public class UnitTest1
+    public class LoginUnitTest
     {
 
         [TestMethod]

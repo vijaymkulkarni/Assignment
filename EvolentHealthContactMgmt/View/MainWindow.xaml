@@ -5,15 +5,16 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:vw="clr-namespace:ContactMgmt"
         mc:Ignorable="d"
-        Title="MainWindow" Height="500" Width="800" 
+        Title="Contact Manager" Height="500" Width="800"
         WindowStartupLocation="CenterScreen" ResizeMode="NoResize">
     <Window.Resources>
-        <vw:ContactsViewModel x:Key="ContactVwModel"/>
+        
+        <!--<vw:ContactsViewModel x:Key="ContactVwModel"/>-->
         <Style TargetType="Button" x:Key="CmdButton">
-            <Setter Property="Margin" Value="0,0,0,0"/>
-            <Setter Property="HorizontalAlignment" Value="Center"/>
-            <Setter Property="VerticalAlignment" Value="Center"/>
-            <Setter Property="Width" Value="75"/>
+            <Setter Property="Margin" Value="0,10,0,0" />
+            <Setter Property="HorizontalAlignment" Value="Center" />
+            <Setter Property="VerticalAlignment" Value="Bottom" />
+            <Setter Property="Width" Value="75" />
             <Setter Property="SnapsToDevicePixels" Value="True" />
             <Setter Property="Foreground" Value="Black" />
             <Setter Property="Background" Value="DarkGray" />
@@ -24,17 +25,17 @@
                 <Setter.Value>
                     <ControlTemplate TargetType="{x:Type Button}">
                         <Border Background="{TemplateBinding Background}"
-                                BorderBrush="LightBlue" 
+                                BorderBrush="LightBlue"
                                 BorderThickness="1" CornerRadius="15,15,15,15" x:Name="bd">
-                            <ContentPresenter HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" 
-                                              Margin="{TemplateBinding Padding}" 
-                                              VerticalAlignment="{TemplateBinding VerticalContentAlignment}" 
-                                              SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" 
+                            <ContentPresenter HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
+                                              Margin="{TemplateBinding Padding}"
+                                              VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
+                                              SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"
                                               RecognizesAccessKey="True" />
                         </Border>
                         <ControlTemplate.Triggers>
                             <Trigger Property="IsMouseOver" Value="True">
-                                <Setter TargetName="bd" Property="Background" Value="LightGray"/>
+                                <Setter TargetName="bd" Property="Background" Value="LightGray" />
                                 <Setter Property="Foreground" Value="White" />
                                 <Setter Property="Cursor" Value="Hand" />
                             </Trigger>
@@ -45,40 +46,42 @@
         </Style>
     </Window.Resources>
     <Window.DataContext>
-        <vw:ContactsViewModel/>
+        <vw:ContactsViewModel />
     </Window.DataContext>
     <Grid>
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="20*"></ColumnDefinition>
-            <ColumnDefinition Width="20*"></ColumnDefinition>
-            <ColumnDefinition Width="20*"></ColumnDefinition>
-            <ColumnDefinition Width="20*"></ColumnDefinition>
-            <ColumnDefinition Width="20*"></ColumnDefinition>
+            <ColumnDefinition Width="20*" />
+            <ColumnDefinition Width="20*" />
+            <ColumnDefinition Width="20*" />
+            <ColumnDefinition Width="20*" />
+            <ColumnDefinition Width="20*" />
         </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
-            <RowDefinition Height="*"/>
-            <RowDefinition Height="Auto"/>
-            <RowDefinition Height="20"/>
+            <RowDefinition Height="*" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="15" />
         </Grid.RowDefinitions>
-        <DataGrid Grid.ColumnSpan="5" Grid.Row="0" HorizontalScrollBarVisibility="Hidden" VerticalScrollBarVisibility="Auto"
-                  ItemsSource="{Binding Contacts}" CanUserAddRows="False" AutoGenerateColumns="False" x:Name="LvContact">
-            <!--<Trigger>
-                <Trigger.Setters>
-
-                </Trigger.Setters>
-            </Trigger>-->
+        <DataGrid Grid.ColumnSpan="5" Grid.Row="0" HorizontalScrollBarVisibility="Hidden"
+                  VerticalScrollBarVisibility="Auto" ItemsSource="{Binding Contacts}" CanUserAddRows="False" 
+                  AutoGenerateColumns="False" x:Name="LvContact">
             <DataGrid.Columns>
-                <DataGridCheckBoxColumn Header="Select" Width="50" Binding="{Binding IsSelected, Mode=TwoWay}"/>
-                <DataGridTextColumn Header="First Name" Width="*" IsReadOnly="True" Binding="{Binding FirstName, Mode=OneWay}"/>
-                <DataGridTextColumn Header="Last Name" Width="*" IsReadOnly="True" Binding="{Binding LastName, Mode=OneWay}" />
-                <DataGridTextColumn Header="Phone Number" Width="*" IsReadOnly="True" Binding="{Binding PhoneNumber, Mode=OneWay}" />
-                <DataGridTextColumn Header="Email Address" Width="*" IsReadOnly="True" Binding="{Binding EmailAddress, Mode=OneWay}" />
-                <DataGridTextColumn Header="Status" Width="*" IsReadOnly="True" Binding="{Binding Path=Status, Mode=OneWay}"/>
+                <DataGridCheckBoxColumn Header="Select" Width="50" Binding="{Binding IsSelected, Mode=TwoWay}" />
+                <DataGridTextColumn Header="First Name" Width="*" IsReadOnly="True"
+                                    Binding="{Binding FirstName, Mode=OneWay}" />
+                <DataGridTextColumn Header="Last Name" Width="*" IsReadOnly="True"
+                                    Binding="{Binding LastName, Mode=OneWay}" />
+                <DataGridTextColumn Header="Phone Number" Width="*" IsReadOnly="True"
+                                    Binding="{Binding PhoneNumber, Mode=OneWay}" />
+                <DataGridTextColumn Header="Email Address" Width="*" IsReadOnly="True"
+                                    Binding="{Binding EmailAddress, Mode=OneWay}" />
+                <DataGridTextColumn Header="Status" Width="*" IsReadOnly="True"
+                                    Binding="{Binding Path=Status, Mode=OneWay}" />
             </DataGrid.Columns>
         </DataGrid>
-        <Button Content="Add" Grid.Column="0" Grid.Row="1" Command="{Binding AddCommand}" Style="{StaticResource CmdButton}"/>
+        <Separator Grid.Column="0" Grid.Row="1" Grid.ColumnSpan="2" VerticalAlignment="Top"/>
+        <Button Content="Add" Grid.Column="0" Grid.Row="1" Command="{Binding AddCommand}" Style="{StaticResource CmdButton}" />
         <Button Content="Update" Grid.Column="1" Grid.Row="1" Command="{Binding UpdateCommand}" Style="{StaticResource CmdButton}" />
-        <Button Content="Delete" Grid.Column="2" Grid.Row="1" Command="{Binding DeleteCommand}" Style="{StaticResource CmdButton}"/>
-        <Button Content="Exit" Grid.Column="4" Grid.Row="1" Command="{Binding ExitCommand}" Style="{StaticResource CmdButton}"/>
+        <Button Content="Delete" Grid.Column="2" Grid.Row="1" Command="{Binding DeleteCommand}" Style="{StaticResource CmdButton}" />
+        <Button Content="Exit" Grid.Column="4" Grid.Row="1" Command="{Binding ExitCommand}" Style="{StaticResource CmdButton}" />
     </Grid>
 </Window>

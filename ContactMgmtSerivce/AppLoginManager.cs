@@ -1,47 +1,16 @@
 ﻿using ContactMgmtCommon;
-using System;
-using System.Collections.Generic;
-using System.Configuration;
+using ContactMgmtSerivce;
 using System.Data;
-using System.Diagnostics;
-using System.Linq;
-using System.ServiceModel;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace ContactMgmtService
 {
     /// <summary>
     /// 
     /// </summary>
-    public class AppLoginManager : ILoginService
+    public class AppLoginManager : ServiceMain, ILoginService
     {
         private LoginInfo _loginCreditials;
-
-        private string _connectionType;
-        private const string ConnectionTypeKey = "connectionType";
-
-        public string ConnectionType
-        {
-            get
-            {
-                if (string.IsNullOrEmpty(_connectionType))
-                {
-                    _connectionType = ConfigurationManager.AppSettings[ConnectionTypeKey];
-                }
-                return _connectionType;
-            }
-        }
-
-        public AppLoginManager(LoginInfo loginCreditials)
-        {
-            _loginCreditials = loginCreditials;
-        }
-
-        public AppLoginManager()
-        {
-        }
-
+        
         public LoginInfo CreditialsLoginInfo
         {
             get => _loginCreditials;
@@ -53,93 +22,66 @@ namespace ContactMgmtService
             _loginCreditials = loginCreditials;
             return ValidateLogin();
         }
-        
+
         public bool ValidateLogin()
         {
-            try
+
+            if (_loginCreditials == null)
+                return false; //GetInvalidCreditalException();
+            else
             {
-                if (_loginCreditials == null)
-                    return false; //GetInvalidCreditalException();
+                var errorMessages = _loginCreditials.Validate();
+                if (!string.IsNullOrEmpty(errorMessages))
+                    return false;
+
+                DataAccessLayerBase dataAccessLayer =
+                    DataAccessLayerBase.GetDataAccessLayer("logins.xml", ConnectionType);
+
+                if (dataAccessLayer == null)
+                    return false;
+
+                string filterExpression = string.Concat("Name = '", CreditialsLoginInfo.LoginName,
+                    "' and Password ='" + CreditialsLoginInfo.Password, "'");
+                DataRow table = dataAccessLayer.GetData(filterExpression);
+                if (table != null)
+                    return true;
                 else
-                {
-                    var errorMessages = _loginCreditials.Validate();
-                    if (!string.IsNullOrEmpty(errorMessages))
-                        return false;
-
-                    DataAccessLayer dataAccessLayer = null;
-                    dataAccessLayer = GetDataAccessLayer();
-
-                    if (dataAccessLayer == null)
-                        return false;
-
-                    string filterExpression = string.Concat("Name = '", CreditialsLoginInfo.LoginName, 
-                                                            "' and Password ='" + CreditialsLoginInfo.Password, "'");
-                    DataRow table = dataAccessLayer.GetData(filterExpression);
-                    if (table != null)
-                        return true;
-                    else
-                        return false; //RaiseCustomFaultException("Provided user/password do not match, please try again.");
-                }
+                    return false; //RaiseCustomFaultException("Provided user/password do not match, please try again.");
             }
-            //catch (System.ServiceModel.FaultException<CustomException>)
-            //{
-            //    throw; 
-            //}
-            catch (Exception)
-            {
-                throw;
-            }
-            return false;
+
         }
 
-        //private static void RaiseFaultException(Exception ex)
+        //private DataAccessLayerBase GetDataAccessLayer()
         //{
-        //    var exception = new CustomException
+        //    DataAccessLayerBase dataAccessLayer = null;
+
+        //    // ReSharper disable once StringCompareIsCultureSpecific.1
+        //    if (String.Compare(ConnectionType.Trim().ToUpper(), "TEXT") == 0)
         //    {
-        //        ExceptionMessage = ex.Message,
-        //        Title = "Exception"
-        //    };
-        //    if (ex.InnerException != null) exception.InnerException = ex.InnerException.ToString();
-        //    exception.StackTrace = ex.StackTrace;
-        //    throw new FaultException<CustomException>(exception);
-        //}
-
-        //private static void RaiseCustomFaultException(string exceptionMessage)
-        //{
-        //    var exception = new CustomException
+        //        dataAccessLayer = new FileSystemDataMgr("logins.xml");
+        //    }
+        //    // ReSharper disable once StringCompareIsCultureSpecific.1
+        //    else if (String.Compare(ConnectionType.Trim().ToUpper(), "SQL") == 0)
         //    {
-        //        ExceptionMessage = exceptionMessage,
-        //        Title = "Exception"
-        //    };
-        //    throw new FaultException<CustomException>(exception);
+        //        dataAccessLayer = new SqlDataMgr();
+        //    }
+        //    return dataAccessLayer;
         //}
-
-        private DataAccessLayer GetDataAccessLayer()
-        {
-            DataAccessLayer dataAccessLayer = null;
-
-            // ReSharper disable once StringCompareIsCultureSpecific.1
-            if (String.Compare(ConnectionType.Trim().ToUpper(), "TEXT") == 0)
-            {
-                dataAccessLayer = new FileSystemDataMgr("logins.xml");
-            }
-            // ReSharper disable once StringCompareIsCultureSpecific.1
-            else if (String.Compare(ConnectionType.Trim().ToUpper(), "SQL") == 0)
-            {
-                dataAccessLayer = new SqlDataMgr();
-            }
-            return dataAccessLayer;
-        }
         
-        CustomException GetInvalidCreditalException()
+        //CustomException GetInvalidCreditalException()
+        //{
+        //    CustomException exception = new CustomException
+        //    {
+        //        ExceptionMessage = "Input Creditials are missing",
+        //        InnerException = "Object supplied is null",
+        //        Title = "Invalid Creditials"
+        //    };
+        //    return exception;
+        //}
+
+        public void Dispose()
         {
-            CustomException exception = new CustomException
-            {
-                ExceptionMessage = "Input Creditials are missing",
-                InnerException = "Object supplied is null",
-                Title = "Invalid Creditials"
-            };
-            return exception;
+            
         }
     }
 }

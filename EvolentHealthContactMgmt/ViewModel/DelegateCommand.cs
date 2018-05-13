@@ -1,17 +1,12 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows;
 using System.Windows.Input;
 
 namespace ContactMgmt
 {
-    public partial class DelegateCommand : ICommand
+    public class DelegateCommand : ICommand
     {
-        private readonly Action<Object> _action;
-        
+        private readonly Action<object> _action;
+
         public DelegateCommand(Action<object> action)
         {
             _action = action;
@@ -28,7 +23,11 @@ namespace ContactMgmt
         }
 
 #pragma warning disable 67
-        public event EventHandler CanExecuteChanged { add { } remove { } }
+        public event EventHandler CanExecuteChanged
+        {
+            add { }
+            remove { }
+        }
 #pragma warning restore 67
     }
 }

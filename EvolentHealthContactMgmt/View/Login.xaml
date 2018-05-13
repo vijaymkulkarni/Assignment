@@ -1,54 +1,58 @@
 ﻿<Window x:Class="ContactMgmt.Login"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:local="clr-namespace:ContactMgmt"
         mc:Ignorable="d"
         Title="Login" Height="400" Width="600"
         WindowStartupLocation="CenterScreen"
         ShowInTaskbar="True"
         SizeToContent="Manual"
-        FocusManager.FocusedElement= "{Binding ElementName=TLoginUserName}"
+        FocusManager.FocusedElement="{Binding ElementName=TLoginUserName}"
         WindowStyle="ThreeDBorderWindow" Background="#FF319776"
         ResizeMode="NoResize">
     <Window.ContextMenu>
-        <ContextMenu/>
+        <ContextMenu />
     </Window.ContextMenu>
     <Grid Margin="0" Height="auto" VerticalAlignment="Top">
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="30*"/>
-            <ColumnDefinition Width="70*"/>
+            <ColumnDefinition Width="30*" />
+            <ColumnDefinition Width="70*" />
         </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
-            <RowDefinition Height="100"/>
-            <RowDefinition Height="50"/>
-            <RowDefinition Height="50"/>
-            <RowDefinition Height="50"/>
-            <RowDefinition Height="50"/>
-            <RowDefinition Height="50"/>
-            <RowDefinition Height="50"/>
-            <RowDefinition Height="50"/>
+            <RowDefinition Height="100" />
+            <RowDefinition Height="50" />
+            <RowDefinition Height="50" />
+            <RowDefinition Height="50" />
+            <RowDefinition Height="50" />
+            <RowDefinition Height="50" />
+            <RowDefinition Height="50" />
+            <RowDefinition Height="50" />
         </Grid.RowDefinitions>
-        <Label Grid.Column="0" Grid.ColumnSpan="2" 
-               Content="Contact Manager" Height="Auto" HorizontalAlignment="Center" 
-               Margin="70,75,66,25" Width="auto" Padding="0,0,0,0" FontFamily="Verdana" FontSize="25" Grid.RowSpan="2"/>
-        <Label Grid.Column="0" Grid.Row="2" Content="Login Name" Height="32" 
-               HorizontalAlignment="Right" Margin="0,6,0,18" Width="auto" Padding="0,0,0,0" 
-               FontFamily="Verdana" FontSize="14" HorizontalContentAlignment="Center"/>
-        <TextBox Grid.Column="1" Grid.Row="2" x:Name="TLoginUserName" Margin="50,0,0,18" TextWrapping="Wrap"   
-                 HorizontalAlignment="Left" Width="262" VerticalContentAlignment="Center"/>
-        <Label Grid.Column="0" Grid.Row="2" Content="Password" HorizontalAlignment="Right" Margin="0,46,0,0" 
-               VerticalAlignment="Top" Height="32" Padding="0,0,0,0" FontFamily="Verdana" FontSize="14" Grid.RowSpan="2"/>
-        <PasswordBox Grid.Column="1" Grid.Row="3"  x:Name="TPasswordBox" 
-                     HorizontalAlignment="Left" Height="32" Margin="50,0,0,0" VerticalAlignment="Top" 
-                     Width="262" Padding="0" Password="" 
-                     IsInactiveSelectionHighlightEnabled="True" 
-                     VerticalContentAlignment="Center"/>
+        <Label Grid.Column="0" Grid.ColumnSpan="2"
+               Content="Contact Manager" Height="Auto" HorizontalAlignment="Center"
+               Margin="70,75,66,25" Width="auto" Padding="0,0,0,0" FontFamily="Verdana" FontSize="25" Grid.RowSpan="2" />
+        <Label Grid.Column="0" Grid.Row="2" Content="Login Name" Height="32"
+               HorizontalAlignment="Right" Margin="0,6,0,18" Width="auto" Padding="0,0,0,0"
+               FontFamily="Verdana" FontSize="14" HorizontalContentAlignment="Center" />
+        <TextBox Grid.Column="1" Grid.Row="2" x:Name="TLoginUserName" Margin="50,0,0,18" TextWrapping="Wrap"
+                 HorizontalAlignment="Left" Width="262" VerticalContentAlignment="Center" />
+        <Label Grid.Column="0" Grid.Row="2" Content="Password" HorizontalAlignment="Right" Margin="0,46,0,0"
+               VerticalAlignment="Top" Height="32" Padding="0,0,0,0" FontFamily="Verdana" FontSize="14"
+               Grid.RowSpan="2" />
+        <PasswordBox Grid.Column="1" Grid.Row="3" x:Name="TPasswordBox"
+                     HorizontalAlignment="Left" Height="32" Margin="50,0,0,0" VerticalAlignment="Top"
+                     Width="262" Padding="0" Password=""
+                     IsInactiveSelectionHighlightEnabled="True"
+                     VerticalContentAlignment="Center" />
+        <Separator Grid.Column="0" Grid.Row="4" Grid.ColumnSpan="2" VerticalAlignment="Top"/>
         <Button Grid.Column="1" Content="Sign In" Grid.Row="4" HorizontalAlignment="Left" x:Name="LogOn"
-                Margin="50,0,0,0" VerticalAlignment="Top" Width="77" Height="25" Click="LogOn_OnClick"/>
-        <Label Grid.Column="0" Grid.Row="5" Grid.ColumnSpan="2" 
-               Content="If you are unable to sign in or if you do not have account, please contact your administrator." Height="Auto" HorizontalAlignment="Center" 
-               Margin="10,25,26,0" Width="auto" Padding="0,0,0,0" FontFamily="Verdana" FontSize="12" Foreground="#FF322D2D"/>
+                Margin="50,0,0,0" VerticalAlignment="Center" Width="77" Height="25" Click="LogOn_OnClick" />
+        <Separator Grid.Column="0" Grid.Row="5" Grid.ColumnSpan="2" VerticalAlignment="Top"/>
+        <Label Grid.Column="0" Grid.Row="5" Grid.ColumnSpan="2"
+               Content="If you are unable to sign in or if you do not have account, please contact your administrator."
+               Height="Auto" HorizontalAlignment="Center"
+               Margin="10,25,26,0" Width="auto" Padding="0,0,0,0" FontFamily="Verdana" FontSize="12"
+               Foreground="#FF322D2D" />
     </Grid>
 </Window>

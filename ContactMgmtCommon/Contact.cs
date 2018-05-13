@@ -6,47 +6,17 @@ using System.Text;
 namespace ContactMgmtCommon
 {
     /// <summary>
-    /// 
     /// </summary>
     [DataContract]
     public class Contact
     {
-        private bool _selected;
+        private long _contactId;
+        private string _emailaddress;
         private string _firstName;
         private string _lastName;
-        private string _emailaddress;
         private string _phoneNumber;
-        private bool _status;
-
-        /// <summary>
-        /// 
-        /// </summary>
-        public Contact()
-        {
-
-        }
-
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="contactFirstName"></param>
-        /// <param name="contactLastName"></param>
-        /// <param name="emailaddress"></param>
-        /// <param name="phoneNumber"></param>
-        /// <param name="status"></param>
-        /// <param name="firstName"></param>
-        /// <param name="lastName"></param>
-        /// <param name="emailAddress"></param>
-        /// <param name="phonenNumber"></param>
-        /// <param name="contactStatus"></param>
-        public Contact(string contactFirstName, string contactLastName, string emailaddress, string phoneNumber, bool status, string firstName, string lastName, string emailAddress, string phonenNumber, bool contactStatus)
-        {
-            _firstName = contactFirstName;
-            _lastName = contactLastName;
-            _emailaddress = emailaddress;
-            _phoneNumber = phoneNumber;
-            _status = contactStatus;
-        }
+        private bool _selected;
+        private string _status;
 
         [DataMember]
         public bool IsSelected
@@ -55,8 +25,14 @@ namespace ContactMgmtCommon
             set => _selected = value;
         }
 
+        [DataMember]
+        public long ContactId
+        {
+            get => _contactId;
+            set => _contactId = value;
+        }
+
         /// <summary>
-        /// 
         /// </summary>
         [DataMember]
         [Required(ErrorMessage = "First Name Required")]
@@ -69,7 +45,6 @@ namespace ContactMgmtCommon
         }
 
         /// <summary>
-        /// 
         /// </summary>
         [DataMember]
         [Required(ErrorMessage = "Last Name Required")]
@@ -82,11 +57,11 @@ namespace ContactMgmtCommon
         }
 
         /// <summary>
-        /// 
         /// </summary>
         [DataMember]
         [Required(ErrorMessage = "Email Address Required")]
-        [RegularExpression("^([0-9a-zA-Z]([-\\.\\w]*[0-9a-zA-Z])*@([0-9a-zA-Z][-\\w]*[0-9a-zA-Z]\\.)+[a-zA-Z]{2,9})$", ErrorMessage = "Email address is invalid")]
+        [RegularExpression("^([0-9a-zA-Z]([-\\.\\w]*[0-9a-zA-Z])*@([0-9a-zA-Z][-\\w]*[0-9a-zA-Z]\\.)+[a-zA-Z]{2,9})$",
+            ErrorMessage = "Email address is invalid")]
         public string EmailAddress
         {
             get => _emailaddress;
@@ -94,11 +69,12 @@ namespace ContactMgmtCommon
         }
 
         /// <summary>
-        /// 
         /// </summary>
         [DataMember]
         [Required(ErrorMessage = "Phone Number Required")]
-        [RegularExpression(@"^((\+\d{1,3}(-| )?\(?\d\)?(-| )?\d{1,5})|(\(?\d{2,6}\)?))(-| )?(\d{3,4})(-| )?(\d{4})(( x| ext)\d{1,5}){0,1}$", ErrorMessage = "Phone Number is invalid")]
+        [RegularExpression(
+            @"^((\+\d{1,3}(-| )?\(?\d\)?(-| )?\d{1,5})|(\(?\d{2,6}\)?))(-| )?(\d{3,4})(-| )?(\d{4})(( x| ext)\d{1,5}){0,1}$",
+            ErrorMessage = "Phone Number is invalid")]
         public string PhoneNumber
         {
             get => _phoneNumber;
@@ -106,34 +82,30 @@ namespace ContactMgmtCommon
         }
 
         /// <summary>
-        /// Status(Possible values: Active/Inactive)
+        ///     Status(Possible values: Active/Inactive)
         /// </summary>
         [DataMember]
-        public bool Status
+        [Required(ErrorMessage = "Status Required")]
+        public string Status
         {
             get => _status;
             set => _status = value;
-        }        
+        }
 
         /// <summary>
-        /// 
         /// </summary>
         /// <returns></returns>
         public string Validate()
         {
             var errorMessages = new StringBuilder();
-            var context = new ValidationContext(this, serviceProvider: null, items: null);
-            var results = new List<System.ComponentModel.DataAnnotations.ValidationResult>();
+            var context = new ValidationContext(this, null, null);
+            var results = new List<ValidationResult>();
 
             var isValid = Validator.TryValidateObject(this, context, results);
 
             if (isValid) return errorMessages.ToString();
-            foreach (var validationResult in results)
-            {
-                errorMessages.AppendLine(validationResult.ErrorMessage);
-            }
+            foreach (var validationResult in results) errorMessages.AppendLine(validationResult.ErrorMessage);
             return errorMessages.ToString();
         }
-
     }
 }

@@ -7,7 +7,6 @@ using System.Text.RegularExpressions;
 namespace ContactMgmtCommon
 {
     /// <summary>
-    /// 
     /// </summary>
     [DataContract]
     public class LoginInfo
@@ -16,14 +15,12 @@ namespace ContactMgmtCommon
         private string _password;
 
         /// <summary>
-        /// 
         /// </summary>
         public LoginInfo()
         {
         }
 
         /// <summary>
-        /// 
         /// </summary>
         /// <param name="loginName"></param>
         /// <param name="password"></param>
@@ -35,7 +32,6 @@ namespace ContactMgmtCommon
 
 
         /// <summary>
-        /// 
         /// </summary>
         [DataMember]
         [Required(ErrorMessage = "Login Name is missing")]
@@ -47,7 +43,6 @@ namespace ContactMgmtCommon
         }
 
         /// <summary>
-        /// 
         /// </summary>
         [DataMember]
         [RegularExpression("[^A-Za-z0-9#$^&@!~%=_]*", ErrorMessage = "Password is invalid")]
@@ -59,14 +54,13 @@ namespace ContactMgmtCommon
         }
 
         /// <summary>
-        /// 
         /// </summary>
         /// <returns></returns>
         public string Validate()
         {
             var errorMessages = new StringBuilder();
-            Regex re = new Regex(@"[^a-zA-Z0-9]");
-            MatchCollection mc = re.Matches(LoginName);
+            var re = new Regex(@"[^a-zA-Z0-9]");
+            var mc = re.Matches(LoginName);
             if (mc.Count > 0)
                 errorMessages.AppendLine("Login Name is invalid");
             re = new Regex(@"[^^A-Za-z0-9#$^&@!~%=_]");
@@ -74,17 +68,14 @@ namespace ContactMgmtCommon
             if (mc.Count > 0)
                 errorMessages.AppendLine("Password is invalid");
 
-            var context = new ValidationContext(this, serviceProvider: null, items: null);
+            var context = new ValidationContext(this, null, null);
             var results = new List<ValidationResult>();
 
             var isValid = Validator.TryValidateObject(this, context, results);
 
             if (isValid) return errorMessages.ToString();
 
-            foreach (var validationResult in results)
-            {
-                errorMessages.AppendLine(validationResult.ErrorMessage);
-            }
+            foreach (var validationResult in results) errorMessages.AppendLine(validationResult.ErrorMessage);
             return errorMessages.ToString();
         }
     }

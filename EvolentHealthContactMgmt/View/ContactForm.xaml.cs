@@ -1,27 +1,35 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Shapes;
 
 namespace ContactMgmt.View
 {
     /// <summary>
-    /// Interaction logic for ContactForm.xaml
+    ///     Interaction logic for ContactForm.xaml
     /// </summary>
     public partial class ContactForm : Window
     {
         public ContactForm()
         {
             InitializeComponent();
+            ContactViewModel viewModel;
+            if (DataContext == null)
+            {
+                viewModel = new ContactViewModel();
+                DataContext = viewModel;
+            }
+
+            viewModel = (ContactViewModel) DataContext;
+            viewModel.CloseWindow += ViewModel_CloseWindow;
+            Loaded += ContactForm_Loaded;
+        }
+
+        private void ContactForm_Loaded(object sender, RoutedEventArgs e)
+        {
+        }
+
+        private void ViewModel_CloseWindow(object sender, EventArgs e)
+        {
+            Close();
         }
     }
 }

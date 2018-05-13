@@ -40,7 +40,7 @@ namespace ContactMgmt
             }
             catch (Exception exception)
             {
-                MessageBox.Show(exception.Message, "Exception");
+                MessageBox.Show(exception.StackTrace, "Exception");
             }
         }
     }

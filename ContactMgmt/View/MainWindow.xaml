@@ -7,9 +7,10 @@
         mc:Ignorable="d"
         Title="Contact Manager" Height="500" Width="800"
         WindowStartupLocation="CenterScreen" ResizeMode="NoResize">
+    <Window.DataContext>
+        <vw:MainWindowViewModel />
+    </Window.DataContext>
     <Window.Resources>
-        
-        <!--<vw:ContactsViewModel x:Key="ContactVwModel"/>-->
         <Style TargetType="Button" x:Key="CmdButton">
             <Setter Property="Margin" Value="0,10,0,0" />
             <Setter Property="HorizontalAlignment" Value="Center" />
@@ -45,9 +46,6 @@
             </Setter>
         </Style>
     </Window.Resources>
-    <Window.DataContext>
-        <vw:ContactsViewModel />
-    </Window.DataContext>
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="20*" />

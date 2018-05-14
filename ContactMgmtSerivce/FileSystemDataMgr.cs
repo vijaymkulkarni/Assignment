@@ -1,4 +1,5 @@
-﻿using System;
+﻿using ContactMgmtService;
+using System;
 using System.Data;
 using System.IO;
 using System.Text;
@@ -9,7 +10,7 @@ namespace ContactMgmtService
     /// <summary>
     /// 
     /// </summary>
-    internal class FileSystemDataMgr : DataAccessLayerBase
+    internal class FileSystemDataMgr : IDataAccess
     {
         private readonly string _fileName;
         
@@ -21,14 +22,14 @@ namespace ContactMgmtService
             _fileName = fileName;
         }
         
-        public override DataTable GetAllData()
+        public DataTable GetAllData()
         {
             var table = _fileName == "login.xml" ? new DataTable("Login") : new DataTable("Contacts");
             ReadFile(ref table);
             return table.Rows.Count > 0 ? table : null;
         }
 
-        public override DataRow GetData(string filterExpression)
+        public DataRow GetData(string filterExpression)
         {
             var table = _fileName == "login.xml" ? new DataTable("Login") : new DataTable("Contacts");
             ReadFile(ref table);
@@ -36,7 +37,7 @@ namespace ContactMgmtService
             return dataRow.Length > 0 ? dataRow[0] : null;
         }
         
-        public override void InsertData(ref DataTable table)
+        public void InsertData(ref DataTable table)
         {
             if (table == null) return;
 
@@ -66,7 +67,7 @@ namespace ContactMgmtService
             table = existingTable;
         }
         
-        public override void UpdateData(ref DataTable table)
+        public void UpdateData(ref DataTable table)
         {
             DataTable existingTable = new DataTable();
             ReadFile(ref existingTable);
@@ -87,7 +88,7 @@ namespace ContactMgmtService
             table = existingTable;
         }
 
-        public override void DeleteData(ref DataTable table)
+        public void DeleteData(ref DataTable table)
         {
             DataTable existingTable = new DataTable();
             ReadFile(ref existingTable);

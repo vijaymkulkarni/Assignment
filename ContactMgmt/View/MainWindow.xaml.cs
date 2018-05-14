@@ -11,7 +11,7 @@ namespace ContactMgmt
         public MainWindow()
         {
             InitializeComponent();
-            var viewModel = new ContactsViewModel();
+            var viewModel = new MainWindowViewModel();
             DataContext = viewModel;
             viewModel.CloseWindow += ViewModel_CloseWindow;
         }

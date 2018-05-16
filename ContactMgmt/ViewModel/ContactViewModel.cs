@@ -12,7 +12,6 @@ namespace ContactMgmt
         public event PropertyChangedEventHandler PropertyChanged;
 
         public event EventHandler CloseWindow;
-
         private void RaisePropertyChanged(string property)
         {
             if (PropertyChanged != null) PropertyChanged(this, new PropertyChangedEventArgs(property));
@@ -44,14 +43,15 @@ namespace ContactMgmt
                 _contactStatuses = new List<ContactStatus>(list);
                 return _contactStatuses;
             }
-            set => _contactStatuses = value;
+            set { _contactStatuses = value; }
         }
 
         private Contact _contactInfo;
 
         public Contact ContactInfo
         {
-            get => _contactInfo == null ? _contactInfo = new Contact() : _contactInfo;
+            get
+            { return _contactInfo == null ? _contactInfo = new Contact() : _contactInfo; }
             set
             {
                 _contactInfo = value;
@@ -63,7 +63,8 @@ namespace ContactMgmt
         /// </summary>
         public long ContactId
         {
-            get => ContactInfo.ContactId;
+            get
+            { return ContactInfo.ContactId; }
             set
             {
                 ContactInfo.ContactId = value;
@@ -75,7 +76,8 @@ namespace ContactMgmt
         /// </summary>
         public string FirstName
         {
-            get => ContactInfo.FirstName;
+            get
+            { return ContactInfo.FirstName; }
             set
             {
                 ContactInfo.FirstName = value;
@@ -87,7 +89,8 @@ namespace ContactMgmt
         /// </summary>
         public string LastName
         {
-            get => ContactInfo.LastName;
+            get
+            { return ContactInfo.LastName; }
             set
             {
                 ContactInfo.LastName = value;
@@ -99,7 +102,8 @@ namespace ContactMgmt
         /// </summary>
         public string EmailAddress
         {
-            get => ContactInfo.EmailAddress;
+            get
+            { return ContactInfo.EmailAddress; }
             set
             {
                 ContactInfo.EmailAddress = value;
@@ -111,7 +115,8 @@ namespace ContactMgmt
         /// </summary>
         public string PhoneNumber
         {
-            get => ContactInfo.PhoneNumber;
+            get
+            { return ContactInfo.PhoneNumber; }
             set
             {
                 ContactInfo.PhoneNumber = value;
@@ -124,7 +129,8 @@ namespace ContactMgmt
         /// </summary>
         public string Status
         {
-            get => ContactInfo.Status;
+            get
+            { return ContactInfo.Status; }
             set
             {
                 ContactInfo.Status = value;
@@ -136,7 +142,16 @@ namespace ContactMgmt
 
         #region Command Implmentation
 
-        public ICommand SaveCommand => new DelegateCommand(Save_Command);
+        public ICommand SaveCommand => new DelegateCommand(Save_Command, CanSaveCommandExecute);
+
+        private bool CanSaveCommandExecute(object obj)
+        {
+            if (string.IsNullOrEmpty(FirstName) || string.IsNullOrEmpty(LastName) || string.IsNullOrEmpty(PhoneNumber) || string.IsNullOrEmpty(EmailAddress) || string.IsNullOrEmpty(Status))
+            {
+                return false;
+            }
+            return true;    
+        }
 
         private void Save_Command(object sender)
         {
@@ -159,8 +174,8 @@ namespace ContactMgmt
             }
         }
 
-        public ICommand CancelCommand => new DelegateCommand(Cancel_Command);
-
+        public ICommand CancelCommand => new DelegateCommand(Cancel_Command, null);
+        
         private void Cancel_Command(object sender)
         {
             if (CloseWindow != null) CloseWindow(sender, null);

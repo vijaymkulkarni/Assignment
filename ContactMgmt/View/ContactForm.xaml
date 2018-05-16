@@ -3,6 +3,7 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:p="clr-namespace:ContactMgmt.Properties"
         xmlns:viewModel="clr-namespace:ContactMgmt"
         mc:Ignorable="d"
         Title="ContactForm" Height="400" Width="600"
@@ -62,40 +63,20 @@
                 <RowDefinition Height="50" />
                 <RowDefinition Height="*" />
             </Grid.RowDefinitions>
-            <Label Grid.ColumnSpan="2" Grid.Row="0" Content="Contact Manager" Height="25" HorizontalAlignment="Center"
-                   Margin="0,0,0,0" Width="auto" Padding="0,0,0,0" FontFamily="Arial" FontWeight="DemiBold"
-                   FontSize="25" />
-            <Label Grid.Column="0" Grid.Row="1" Content="First Name" Height="25" HorizontalAlignment="Right"
-                   Margin="10,0,0,0" Width="auto" Padding="0,0,10,0" FontFamily="Verdana" FontSize="15" />
-            <TextBox x:Name="TxtFirstName" Text="{Binding FirstName}" Grid.Column="1" Grid.Row="1" Height="25"
-                     HorizontalAlignment="Stretch" Padding="0,0,0,0" Margin="10,0,10,0" TabIndex="0" />
-            <Label Grid.Column="0" Grid.Row="2" Content="Last Name" Height="25" HorizontalAlignment="Right"
-                   Margin="10,0,0,0" Width="auto" Padding="0,0,10,0" FontFamily="Verdana" FontSize="15" />
-            <TextBox x:Name="TxtLastName" Text="{Binding LastName}" Grid.Column="1" Grid.Row="2" Height="25"
-                     HorizontalAlignment="Stretch" Padding="0,0,0,0" Margin="10,0,10,0" TabIndex="1" />
-            <Label Grid.Column="0" Grid.Row="3" Content="Phone Number" Height="25" HorizontalAlignment="Right"
-                   Margin="10,0,0,0" Width="auto" Padding="0,0,10,0" FontFamily="Verdana" FontSize="15" />
-            <TextBox x:Name="TxtPhoneNumber" Grid.Column="1" Text="{Binding Path=PhoneNumber, Mode=TwoWay}"
-                     Grid.Row="3" Height="25" HorizontalAlignment="Stretch" Padding="0,0,0,0" Margin="10,0,10,0"
-                     TabIndex="2" />
-            <Label Grid.Column="0" Grid.Row="4" Content="Email Address" Height="25" HorizontalAlignment="Right"
-                   Margin="10,0,0,0" Width="auto" Padding="0,0,10,0" FontFamily="Verdana" FontSize="15" />
-            <TextBox x:Name="TxtEmailAddr" Text="{Binding Path=EmailAddress, Mode=TwoWay}" Grid.Column="1" Grid.Row="4"
-                     Height="25" HorizontalAlignment="Stretch" Padding="0,0,0,0" Margin="10,0,10,0" TabIndex="3" />
-            <Label Grid.Column="0" Grid.Row="5" Content="Status" Height="25" HorizontalAlignment="Right"
-                   Margin="10,0,0,0" Width="auto" Padding="0,0,10,0" FontFamily="Verdana" FontSize="15" />
-            <ComboBox x:Name="CmbStatus" Grid.Column="1" ItemsSource="{Binding Path=ContactStatuses}"
-                      DisplayMemberPath="StatusName"
-                      SelectedValuePath="StatusName"
-                      SelectedValue="{Binding Path=Status}"
-                      Grid.Row="5" Height="25" HorizontalAlignment="Stretch" Padding="0,0,0,0" Margin="10,0,10,0"
-                      TabIndex="4" />
-            <Button Style="{StaticResource CmdButton}" Command="{Binding SaveCommand}" Grid.Column="1" Content="Save"
-                    Grid.Row="6" HorizontalAlignment="Right" x:Name="BtnSave" Margin="0,0,120,0"
-                    Width="77" Height="25" TabIndex="5" />
-            <Button Style="{StaticResource CmdButton}" Command="{Binding CancelCommand}"
-                    Grid.Column="1" Content="Cancel" Grid.Row="6" HorizontalAlignment="Right"
-                    x:Name="BtnCancel" Margin="150,0,20,0" Width="77" Height="25" TabIndex="6" />
+            <Label Grid.ColumnSpan="2" Grid.Row="0" Content="{x:Static p:Resource1.ContactFormTitle}" Height="25" HorizontalAlignment="Center" Margin="0,0,0,10" Width="auto" Padding="0,0,0,0" FontFamily="Arial" FontWeight="Bold" FontSize="25" />
+            <Label Grid.Column="0" Grid.Row="1" Content="{x:Static p:Resource1.ContactFirstName}" Height="25" HorizontalAlignment="Right" Margin="10,0,0,0" Width="auto" Padding="0,0,10,0" FontFamily="Verdana" FontSize="15" />
+            <TextBox x:Name="TxtFirstName" Text="{Binding FirstName}" Grid.Column="1" Grid.Row="1" Height="25" HorizontalAlignment="Stretch" Padding="0,0,0,0" Margin="10,0,10,0" TabIndex="0" />
+            <Label Grid.Column="0" Grid.Row="2" Content="{x:Static p:Resource1.ContactLastName}" Height="25" HorizontalAlignment="Right"  Margin="10,0,0,0" Width="auto" Padding="0,0,10,0" FontFamily="Verdana" FontSize="15" />
+            <TextBox x:Name="TxtLastName" Text="{Binding LastName}" Grid.Column="1" Grid.Row="2" Height="25" HorizontalAlignment="Stretch" Padding="0,0,0,0" Margin="10,0,10,0" TabIndex="1" />
+            <Label Grid.Column="0" Grid.Row="3" Content="{x:Static p:Resource1.ContactPhoneNumber}" Height="25" HorizontalAlignment="Right" Margin="10,0,0,0" Width="auto" Padding="0,0,10,0" FontFamily="Verdana" FontSize="15" />
+            <TextBox x:Name="TxtPhoneNumber" Grid.Column="1" Text="{Binding Path=PhoneNumber, Mode=TwoWay}" Grid.Row="3" Height="25" HorizontalAlignment="Left" Padding="0,0,0,0" Margin="10,12,0,12" TabIndex="2" Width="184" />
+            <Label Grid.Column="0" Grid.Row="4" Content="{x:Static p:Resource1.ContactEmail}" Height="25" HorizontalAlignment="Right" Margin="10,0,0,0" Width="auto" Padding="0,0,10,0" FontFamily="Verdana" FontSize="15" />
+            <TextBox x:Name="TxtEmailAddr" Text="{Binding Path=EmailAddress, Mode=TwoWay}" Grid.Column="1" Grid.Row="4" Height="25" HorizontalAlignment="Stretch" Padding="0,0,0,0" Margin="10,0,10,0" TabIndex="3" />
+            <Label Grid.Column="0" Grid.Row="5" Content="{x:Static p:Resource1.ContactStatus}" Height="25" HorizontalAlignment="Right" Margin="10,0,0,0" Width="auto" Padding="0,0,10,0" FontFamily="Verdana" FontSize="15" />
+            <ComboBox x:Name="CmbStatus" Grid.Column="1" ItemsSource="{Binding Path=ContactStatuses}" DisplayMemberPath="StatusName" SelectedValuePath="StatusName" SelectedValue="{Binding Path=Status}" Grid.Row="5" Height="25" HorizontalAlignment="Stretch" Padding="0,0,0,0" Margin="10,0,10,0" TabIndex="4" />
+            <Button Style="{StaticResource CmdButton}" Command="{Binding SaveCommand}"  Grid.Column="1" Content="{x:Static p:Resource1.SaveButton}" Grid.Row="6" HorizontalAlignment="Right" x:Name="BtnSave" Margin="0,0,120,0" Width="77" Height="25" TabIndex="5" />
+            <Button Style="{StaticResource CmdButton}" Command="{Binding CancelCommand}" Grid.Column="1" Content="{x:Static p:Resource1.CancelButton}" Grid.Row="6" HorizontalAlignment="Right" x:Name="BtnCancel" Margin="150,0,20,0" Width="77" Height="25" TabIndex="6" />
+            <Label Grid.Column="1" Grid.Row="3" Content="{x:Static p:Resource1.ContactFormat}" Height="25" HorizontalAlignment="Right" Margin="0,15,0,10" Width="264" Padding="0,0,0,0" FontFamily="Verdana" FontSize="9" FontStyle="Normal" FontWeight="Bold" HorizontalContentAlignment="Center"/>
         </Grid>
 
     </Grid>

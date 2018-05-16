@@ -1,0 +1,5 @@
+﻿<LoginInfo>
+  <Login Name="admin" password="admin@123" type="Admin"/>
+  <Login Name="test" password="test@123" type="Guest"/>
+</LoginInfo>
+

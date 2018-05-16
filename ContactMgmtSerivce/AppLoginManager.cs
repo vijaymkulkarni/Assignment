@@ -1,5 +1,5 @@
 ﻿using ContactMgmtCommon;
-using ContactMgmtSerivce;
+using ContactMgmtService;
 using System.Data;
 
 namespace ContactMgmtService
@@ -13,8 +13,9 @@ namespace ContactMgmtService
         
         public LoginInfo CreditialsLoginInfo
         {
-            get => _loginCreditials;
-            set => _loginCreditials = value;
+            get
+            { return _loginCreditials; }
+            set { _loginCreditials = value; }
         }
 
         public bool ValidateLogin(LoginInfo loginCreditials)
@@ -34,14 +35,12 @@ namespace ContactMgmtService
                 if (!string.IsNullOrEmpty(errorMessages))
                     return false;
 
-                DataAccessLayerBase dataAccessLayer =
-                    DataAccessLayerBase.GetDataAccessLayer("logins.xml", ConnectionType);
+                IDataAccess dataAccessLayer = DataAccessLayerFactory.GetDataAccessLayer(@"DataFiles\logins.xml", ConnectionType);
 
                 if (dataAccessLayer == null)
                     return false;
 
-                string filterExpression = string.Concat("Name = '", CreditialsLoginInfo.LoginName,
-                    "' and Password ='" + CreditialsLoginInfo.Password, "'");
+                string filterExpression = string.Concat("Name = '", CreditialsLoginInfo.LoginName, "' and Password ='" + CreditialsLoginInfo.Password, "'");
                 DataRow table = dataAccessLayer.GetData(filterExpression);
                 if (table != null)
                     return true;
@@ -50,34 +49,7 @@ namespace ContactMgmtService
             }
 
         }
-
-        //private DataAccessLayerBase GetDataAccessLayer()
-        //{
-        //    DataAccessLayerBase dataAccessLayer = null;
-
-        //    // ReSharper disable once StringCompareIsCultureSpecific.1
-        //    if (String.Compare(ConnectionType.Trim().ToUpper(), "TEXT") == 0)
-        //    {
-        //        dataAccessLayer = new FileSystemDataMgr("logins.xml");
-        //    }
-        //    // ReSharper disable once StringCompareIsCultureSpecific.1
-        //    else if (String.Compare(ConnectionType.Trim().ToUpper(), "SQL") == 0)
-        //    {
-        //        dataAccessLayer = new SqlDataMgr();
-        //    }
-        //    return dataAccessLayer;
-        //}
         
-        //CustomException GetInvalidCreditalException()
-        //{
-        //    CustomException exception = new CustomException
-        //    {
-        //        ExceptionMessage = "Input Creditials are missing",
-        //        InnerException = "Object supplied is null",
-        //        Title = "Invalid Creditials"
-        //    };
-        //    return exception;
-        //}
 
         public void Dispose()
         {

@@ -38,8 +38,9 @@ namespace ContactMgmtCommon
         [RegularExpression("[^a-zA-Z0-9]*", ErrorMessage = "Login Name is invalid")]
         public string LoginName
         {
-            get => _loginName;
-            set => _loginName = value;
+            get
+            { return _loginName; }
+            set { _loginName = value; }
         }
 
         /// <summary>
@@ -49,8 +50,9 @@ namespace ContactMgmtCommon
         [Required(ErrorMessage = "Password is missing")]
         public string Password
         {
-            get => _password;
-            set => _password = value;
+            get
+            { return _password; }
+            set { _password = value; }
         }
 
         /// <summary>

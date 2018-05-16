@@ -1,5 +1,5 @@
 ﻿using ContactMgmtCommon;
-using ContactMgmtSerivce;
+using ContactMgmtService;
 using System.Collections.Generic;
 using System.Data;
 
@@ -12,11 +12,11 @@ namespace ContactMgmtService
     {
         #region Properties
 
-        private DataAccessLayerBase DataAccessLayer
+        private IDataAccess DataAccessLayer
         {
             get
             {
-                var dataAccessLayerBase = DataAccessLayerBase.GetDataAccessLayer("contacts.xml", ConnectionType);
+                var dataAccessLayerBase = DataAccessLayerFactory.GetDataAccessLayer(@"DataFiles\contacts.xml", ConnectionType);
                 return dataAccessLayerBase;
             }
         }
@@ -80,6 +80,10 @@ namespace ContactMgmtService
         /// <param name="contactInfo"></param>
         public bool InsertContact(ref Contact contactInfo)
         {
+            string errorMessage = contactInfo.Validate();
+            if (!string.IsNullOrEmpty(errorMessage))
+                throw new System.Exception(errorMessage);
+
             var table = GetContactInfoDataTable(contactInfo);
             DataAccessLayer.InsertData(ref table);
             return true;
@@ -91,6 +95,10 @@ namespace ContactMgmtService
         /// <param name="contactInfo"></param>
         public bool UpdateContact(ref Contact contactInfo)
         {
+            string errorMessage = contactInfo.Validate();
+            if (!string.IsNullOrEmpty(errorMessage))
+                throw new System.Exception(errorMessage);
+
             var table = GetContactInfoDataTable(contactInfo);
             string filterExpression = string.Concat("ID = ", contactInfo.ContactId);
             DataRow[] rows = table.Select(filterExpression);

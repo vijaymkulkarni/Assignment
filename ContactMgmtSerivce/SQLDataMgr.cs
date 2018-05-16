@@ -1,9 +1,10 @@
-﻿using System;
+﻿using ContactMgmtService;
+using System;
 using System.Data;
 
 namespace ContactMgmtService
 {
-    internal class SqlDataMgr : DataAccessLayerBase
+    internal class SqlDataMgr : IDataAccess
     {
 
         #region SQL Command
@@ -99,27 +100,27 @@ namespace ContactMgmtService
 
         #endregion
 
-        public override DataTable GetAllData()
+        public DataTable GetAllData()
         {
             throw new NotImplementedException();
         }
 
-        public override DataRow GetData(string filterExpression)
+        public DataRow GetData(string filterExpression)
         {
             throw new NotImplementedException();
         }
 
-        public override void InsertData(ref DataTable table)
+        public void InsertData(ref DataTable table)
         {
             throw new NotImplementedException();
         }
 
-        public override void UpdateData(ref DataTable table)
+        public void UpdateData(ref DataTable table)
         {
             throw new NotImplementedException();
         }
 
-        public override void DeleteData(ref DataTable table)
+        public void DeleteData(ref DataTable table)
         {
             throw new NotImplementedException();
         }

@@ -14,34 +14,21 @@ namespace ContactMgmt
         public Login()
         {
             InitializeComponent();
+            var viewModel = new LoginViewModel();
+            DataContext = viewModel;
+            viewModel.CloseWindow += ViewModel_CloseWindow;
+            viewModel.GetPasswordToViewModel += GetPasswordToViewModel;
         }
 
-        private void LogOn_OnClick(object sender, RoutedEventArgs e)
+        private void ViewModel_CloseWindow(object sender, EventArgs e)
         {
-            try
-            {
-                ILoginService contactMgmt = new AppLoginManager();
-                var returnValue = contactMgmt.ValidateLogin(new LoginInfo(TLoginUserName.Text, TPasswordBox.Password));
-                if (!returnValue)
-                {
-                    MessageBox.Show("Invalid login name / password, please try again.", "Contact Manager Sign In",
-                        MessageBoxButton.OK, MessageBoxImage.Error);
-                }
-                else
-                {
-                    var mainWindow = new MainWindow();
-                    Close();
-                    mainWindow.ShowDialog();
-                }
-            }
-            catch (FaultException<CustomException> ex)
-            {
-                MessageBox.Show(ex.Message, "Exception");
-            }
-            catch (Exception exception)
-            {
-                MessageBox.Show(exception.StackTrace, "Exception");
-            }
+            Close();
         }
+
+        private void GetPasswordToViewModel(object sender, EventArgs e)
+        {
+            var viewModel = (LoginViewModel)DataContext;
+            viewModel.Password = TPasswordBox.Password;
+        }        
     }
 }

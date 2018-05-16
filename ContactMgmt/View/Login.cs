@@ -22,6 +22,7 @@ namespace ContactMgmt
 
         private void ViewModel_CloseWindow(object sender, EventArgs e)
         {
+            LogHelper.Log(LogType.Information, "Login Window successful exit");
             Close();
         }
 

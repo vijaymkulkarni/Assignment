@@ -2,6 +2,7 @@
 using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Linq;
+using System.Runtime.Caching;
 using System.Windows.Input;
 using ContactMgmt.View;
 using ContactMgmtCommon;
@@ -12,13 +13,44 @@ namespace ContactMgmt
     /// </summary>
     public class MainWindowViewModel : INotifyPropertyChanged
     {
-        private ObservableCollection<Contact> _contacts;
+        const string CACHE_KEY = "LoginInfo";
 
+
+        private bool _isButtonEnable = true;
+        /// <summary>
+        /// Login user name
+        /// </summary>
+        public bool IsButtonEnable
+        {
+            get
+            { return _isButtonEnable; }
+            set
+            {
+                _isButtonEnable = value;
+                RaisePropertyChanged("IsButtonEnable");
+            }
+        }
+
+        private ObservableCollection<Contact> _contacts;
+        
+        /// <summary>
+        /// default constructor
+        /// </summary>
         public MainWindowViewModel()
         {
+            LoginInfo login;
+            ObjectCache cache = MemoryCache.Default;            
+            login = cache.Get(CACHE_KEY) as LoginInfo;
+            if (login != null)
+            {
+                IsButtonEnable = login.Loginrole.ToUpper().Trim() == "ADMIN";
+            }
             GetAllContacts();
         }
 
+        /// <summary>
+        /// All contacts binding to Grid control
+        /// </summary>
         public ObservableCollection<Contact> Contacts
         {
             get
@@ -33,23 +65,17 @@ namespace ContactMgmt
         }
 
         public event PropertyChangedEventHandler PropertyChanged;
+
+        /// <summary>
+        /// Event handler when user clicks on Exit / Close button.
+        /// </summary>
         public event EventHandler CloseWindow;
 
-        private void GetAllContacts()
-        {
-            using (IContactService contactMgmt = new ContactMgmtService.ContactMgmtService())
-            {
-                Contacts = new ObservableCollection<Contact>(contactMgmt.GetAllContacts());
-            }
-        }
-
-        private void RaisePropertyChanged(string property)
-        {
-            if (PropertyChanged != null) PropertyChanged(this, new PropertyChangedEventArgs(property));
-        }
-
         #region ICommand implementation
-
+        
+        /// <summary>
+        /// Add contact button command 
+        /// </summary>
         public ICommand AddCommand => new DelegateCommand(AddContactCommand, null);
         private void AddContactCommand(object sender)
         {
@@ -59,14 +85,11 @@ namespace ContactMgmt
             contactForm.ShowDialog();
             GetAllContacts();
         }
-        public ICommand UpdateCommand => new DelegateCommand(UpdateContactCommand, canUpdateButtonEnable);
 
-        private bool canUpdateButtonEnable(object obj)
-        {
-
-            return true; ;
-        }
-
+        /// <summary>
+        /// Update contact button command
+        /// </summary>
+        public ICommand UpdateCommand => new DelegateCommand(UpdateContactCommand, null);
         private void UpdateContactCommand(object sender)
         {
             var selectedContacts = (from c in Contacts where c.IsSelected select c).ToList();
@@ -85,13 +108,11 @@ namespace ContactMgmt
                 GetAllContacts();
             }
         }
-        public ICommand DeleteCommand => new DelegateCommand(DeleteContactCommand, canDeleteButtonEnable);
 
-        private bool canDeleteButtonEnable(object obj)
-        {
-            return true;
-        }
-
+        /// <summary>
+        /// Delete contact(s) button command
+        /// </summary>
+        public ICommand DeleteCommand => new DelegateCommand(DeleteContactCommand, null);
         private void DeleteContactCommand(object sender)
         {
             var deletContacts = (from contact in Contacts where contact.IsSelected select contact).ToList();
@@ -103,6 +124,10 @@ namespace ContactMgmt
 
             GetAllContacts();
         }
+
+        /// <summary>
+        /// Exit/Close button command.
+        /// </summary>
         public ICommand ExitCommand => new DelegateCommand(Exit_Command, null);
         private void Exit_Command(object sender)
         {
@@ -110,5 +135,23 @@ namespace ContactMgmt
         }
 
         #endregion
+
+        #region Private Helper Routines
+
+        private void GetAllContacts()
+        {
+            using (IContactService contactMgmt = new ContactMgmtService.ContactMgmtService())
+            {
+                Contacts = new ObservableCollection<Contact>(contactMgmt.GetAllContacts());
+            }
+        }
+
+        private void RaisePropertyChanged(string property)
+        {
+            if (PropertyChanged != null) PropertyChanged(this, new PropertyChangedEventArgs(property));
+        }
+
+        #endregion
+
     }
 }

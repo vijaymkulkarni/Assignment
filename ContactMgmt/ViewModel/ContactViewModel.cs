@@ -19,6 +19,9 @@ namespace ContactMgmt
 
         #region Properties
 
+        /// <summary>
+        /// contact status binding values to status drop down.
+        /// </summary>
         public class ContactStatus
         {
             public ContactStatus(string name)
@@ -31,6 +34,9 @@ namespace ContactMgmt
 
         private List<ContactStatus> _contactStatuses;
 
+        /// <summary>
+        /// Contact Status Binding property to status combobox
+        /// </summary>
         public List<ContactStatus> ContactStatuses
         {
             get
@@ -47,7 +53,9 @@ namespace ContactMgmt
         }
 
         private Contact _contactInfo;
-
+        /// <summary>
+        /// Property to hold contact information
+        /// </summary>
         public Contact ContactInfo
         {
             get
@@ -60,6 +68,7 @@ namespace ContactMgmt
         }
 
         /// <summary>
+        /// Contact Id : Primary Key
         /// </summary>
         public long ContactId
         {
@@ -73,6 +82,7 @@ namespace ContactMgmt
         }
 
         /// <summary>
+        /// First Name of Contact
         /// </summary>
         public string FirstName
         {
@@ -86,6 +96,7 @@ namespace ContactMgmt
         }
 
         /// <summary>
+        /// Last Name of contact
         /// </summary>
         public string LastName
         {
@@ -99,6 +110,7 @@ namespace ContactMgmt
         }
 
         /// <summary>
+        /// Email address of contact
         /// </summary>
         public string EmailAddress
         {
@@ -112,6 +124,7 @@ namespace ContactMgmt
         }
 
         /// <summary>
+        /// Phone Number of contact Defined format (+XX XXX XXXXXXXXX) / (+XX XXXXXXXXXXX)
         /// </summary>
         public string PhoneNumber
         {
@@ -125,7 +138,7 @@ namespace ContactMgmt
         }
 
         /// <summary>
-        ///     Status(Possible values: Active/Inactive)
+        ///     Status (Possible values: Active/Inactive)
         /// </summary>
         public string Status
         {
@@ -142,17 +155,11 @@ namespace ContactMgmt
 
         #region Command Implmentation
 
-        public ICommand SaveCommand => new DelegateCommand(Save_Command, CanSaveCommandExecute);
-
-        private bool CanSaveCommandExecute(object obj)
-        {
-            if (string.IsNullOrEmpty(FirstName) || string.IsNullOrEmpty(LastName) || string.IsNullOrEmpty(PhoneNumber) || string.IsNullOrEmpty(EmailAddress) || string.IsNullOrEmpty(Status))
-            {
-                return false;
-            }
-            return true;    
-        }
-
+        /// <summary>
+        /// Save button command binding event.
+        /// </summary>
+        public ICommand SaveCommand => new DelegateCommand(Save_Command, null);
+        
         private void Save_Command(object sender)
         {
             var errorMsg = _contactInfo.Validate();
@@ -174,11 +181,20 @@ namespace ContactMgmt
             }
         }
 
+        /// <summary>
+        /// cancel / Exit button command binding event
+        /// </summary>
         public ICommand CancelCommand => new DelegateCommand(Cancel_Command, null);
-        
+
         private void Cancel_Command(object sender)
         {
-            if (CloseWindow != null) CloseWindow(sender, null);
+            if (CloseWindow != null)
+            {
+                LogHelper.Log(LogType.Information, "Contact Window successful exit");
+                CloseWindow(sender, null);
+            }
+            else
+                LogHelper.Log(LogType.Information, "Close window handle is missing");
         }
 
         #endregion

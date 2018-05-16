@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data;
 using System.ServiceModel;
 
 namespace ContactMgmtCommon
@@ -23,7 +24,7 @@ namespace ContactMgmtCommon
 
         [OperationContract]
         [FaultContract(typeof(CustomException))]
-        void GetMatchingContacts(Contact contactInfo);
+        DataTable GetMatchingContacts(Contact contactInfo);
 
         [OperationContract]
         [FaultContract(typeof(CustomException))]

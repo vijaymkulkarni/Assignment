@@ -22,7 +22,7 @@ namespace ContactMgmt.Properties {
     [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "15.0.0.0")]
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
-    internal class Resources {
+    public class Resources {
         
         private static global::System.Resources.ResourceManager resourceMan;
         
@@ -36,7 +36,7 @@ namespace ContactMgmt.Properties {
         ///   Returns the cached ResourceManager instance used by this class.
         /// </summary>
         [global::System.ComponentModel.EditorBrowsableAttribute(global::System.ComponentModel.EditorBrowsableState.Advanced)]
-        internal static global::System.Resources.ResourceManager ResourceManager {
+        public static global::System.Resources.ResourceManager ResourceManager {
             get {
                 if (object.ReferenceEquals(resourceMan, null)) {
                     global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("ContactMgmt.Properties.Resources", typeof(Resources).Assembly);
@@ -51,12 +51,138 @@ namespace ContactMgmt.Properties {
         ///   resource lookups using this strongly typed resource class.
         /// </summary>
         [global::System.ComponentModel.EditorBrowsableAttribute(global::System.ComponentModel.EditorBrowsableState.Advanced)]
-        internal static global::System.Globalization.CultureInfo Culture {
+        public static global::System.Globalization.CultureInfo Culture {
             get {
                 return resourceCulture;
             }
             set {
                 resourceCulture = value;
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Sign In.
+        /// </summary>
+        public static string AuthenticateButton {
+            get {
+                return ResourceManager.GetString("AuthenticateButton", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Cancel.
+        /// </summary>
+        public static string CancelButton {
+            get {
+                return ResourceManager.GetString("CancelButton", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Email Address.
+        /// </summary>
+        public static string ContactEmail {
+            get {
+                return ResourceManager.GetString("ContactEmail", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to First Name.
+        /// </summary>
+        public static string ContactFirstName {
+            get {
+                return ResourceManager.GetString("ContactFirstName", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to (+XX XXX XXXXXXXXX) / (+XX XXXXXXXXXXX).
+        /// </summary>
+        public static string ContactFormat {
+            get {
+                return ResourceManager.GetString("ContactFormat", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Contact Manager.
+        /// </summary>
+        public static string ContactFormTitle {
+            get {
+                return ResourceManager.GetString("ContactFormTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Last Name.
+        /// </summary>
+        public static string ContactLastName {
+            get {
+                return ResourceManager.GetString("ContactLastName", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Phone Number.
+        /// </summary>
+        public static string ContactPhoneNumber {
+            get {
+                return ResourceManager.GetString("ContactPhoneNumber", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Status.
+        /// </summary>
+        public static string ContactStatus {
+            get {
+                return ResourceManager.GetString("ContactStatus", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Please contact your administrator if unable to sign in or do not have account..
+        /// </summary>
+        public static string LoginFormMessage {
+            get {
+                return ResourceManager.GetString("LoginFormMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Contact Manager Login.
+        /// </summary>
+        public static string LoginFormTitle {
+            get {
+                return ResourceManager.GetString("LoginFormTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Login Name.
+        /// </summary>
+        public static string LoginName {
+            get {
+                return ResourceManager.GetString("LoginName", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Password.
+        /// </summary>
+        public static string Password {
+            get {
+                return ResourceManager.GetString("Password", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Save.
+        /// </summary>
+        public static string SaveButton {
+            get {
+                return ResourceManager.GetString("SaveButton", resourceCulture);
             }
         }
     }

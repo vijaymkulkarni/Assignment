@@ -13,13 +13,8 @@ namespace ContactMgmtCommon
     {
         private string _loginName;
         private string _password;
-
-        /// <summary>
-        /// </summary>
-        public LoginInfo()
-        {
-        }
-
+        private string _loginRole;
+        
         /// <summary>
         /// </summary>
         /// <param name="loginName"></param>
@@ -32,6 +27,7 @@ namespace ContactMgmtCommon
 
 
         /// <summary>
+        /// login name / user name of logged-in user.
         /// </summary>
         [DataMember]
         [Required(ErrorMessage = "Login Name is missing")]
@@ -39,11 +35,17 @@ namespace ContactMgmtCommon
         public string LoginName
         {
             get
-            { return _loginName; }
-            set { _loginName = value; }
+            {
+                return _loginName;
+            }
+            set
+            {
+                _loginName = value;
+            }
         }
 
         /// <summary>
+        /// Password of logged in user
         /// </summary>
         [DataMember]
         [RegularExpression("[^A-Za-z0-9#$^&@!~%=_]*", ErrorMessage = "Password is invalid")]
@@ -55,6 +57,22 @@ namespace ContactMgmtCommon
             set { _password = value; }
         }
 
+
+        /// <summary>
+        /// Various roles of given login user return back to calling routine such as admin / Guest.
+        /// </summary>
+        [DataMember]
+        public string Loginrole
+        {
+            get
+            {
+                return _loginRole;
+            }
+            set
+            {
+                _loginRole = value;
+            }
+        }
         /// <summary>
         /// </summary>
         /// <returns></returns>

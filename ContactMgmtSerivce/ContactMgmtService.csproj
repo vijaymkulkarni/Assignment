@@ -43,6 +43,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AppLoginManager.cs" />
+    <Compile Include="AuditHelper.cs" />
     <Compile Include="ContactMgmtService.cs" />
     <Compile Include="DataAccessLayerFactory.cs" />
     <Compile Include="FileSystemDataMgr.cs" />

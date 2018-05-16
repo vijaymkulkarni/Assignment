@@ -8,9 +8,12 @@ namespace ContactMgmtCommon
     [ServiceContract]
     public interface ILoginService : IDisposable
     {
+
         /// <summary>
+        /// Validate Login operation contract
         /// </summary>
-        /// <param name="loginCreditials"></param>
+        /// <param name="loginCreditials">Login information</param>
+        /// <returns></returns>
         [OperationContract]
         [FaultContract(typeof(CustomException))]
         bool ValidateLogin(LoginInfo loginCreditials);

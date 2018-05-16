@@ -50,8 +50,13 @@
   <ItemGroup>
     <Compile Include="Contact.cs" />
     <Compile Include="CustomException.cs" />
+    <Compile Include="EventViewerLogger.cs" />
+    <Compile Include="FileLogger.cs" />
     <Compile Include="IContactService.cs" />
+    <Compile Include="ILogger.cs" />
     <Compile Include="ILoginService.cs" />
+    <Compile Include="LogEnums.cs" />
+    <Compile Include="LogHelper.cs" />
     <Compile Include="LoginInfo.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

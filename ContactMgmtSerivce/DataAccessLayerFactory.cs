@@ -17,7 +17,7 @@ namespace ContactMgmtService
         {
             get
             {
-                if (_connectionString == string.Empty)
+                if (string.IsNullOrEmpty(_connectionString))
                 {
                     _connectionString = ConfigurationManager.ConnectionStrings[ConnectionStringName].ConnectionString;
                 }
@@ -34,13 +34,11 @@ namespace ContactMgmtService
         internal static IDataAccess GetDataAccessLayer(string dataFile, string connectionType)
         {
             IDataAccess dataAccessLayer = null;
-
-            // ReSharper disable once StringCompareIsCultureSpecific.1
+            
             if (String.Compare(connectionType.Trim().ToUpper(), "TEXT") == 0)
             {
                 dataAccessLayer = new FileSystemDataMgr(dataFile);
             }
-            // ReSharper disable once StringCompareIsCultureSpecific.1
             else if (String.Compare(connectionType.Trim().ToUpper(), "SQL") == 0)
             {
                 dataAccessLayer = new SqlDataMgr();

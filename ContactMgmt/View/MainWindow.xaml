@@ -11,6 +11,7 @@
         <vw:MainWindowViewModel />
     </Window.DataContext>
     <Window.Resources>
+        <BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter" />
         <Style TargetType="Button" x:Key="CmdButton">
             <Setter Property="Margin" Value="0,10,0,0" />
             <Setter Property="HorizontalAlignment" Value="Center" />
@@ -77,9 +78,9 @@
             </DataGrid.Columns>
         </DataGrid>
         <Separator Grid.Column="0" Grid.Row="1" Grid.ColumnSpan="2" VerticalAlignment="Top"/>
-        <Button Content="Add" Grid.Column="0" Grid.Row="1" Command="{Binding AddCommand}" Style="{StaticResource CmdButton}" />
-        <Button Content="Update" Grid.Column="1" Grid.Row="1" Command="{Binding UpdateCommand}" Style="{StaticResource CmdButton}" />
-        <Button Content="Delete" Grid.Column="2" Grid.Row="1" Command="{Binding DeleteCommand}" Style="{StaticResource CmdButton}" />
+        <Button Content="Add" Grid.Column="0" Grid.Row="1"  Visibility= "{Binding IsButtonEnable, Converter={StaticResource BooleanToVisibilityConverter}}" IsEnabled="{Binding Path=IsButtonEnable, Mode=TwoWay}" Command="{Binding AddCommand}" Style="{StaticResource CmdButton}" />
+        <Button Content="Update" Grid.Column="1" Grid.Row="1" Visibility= "{Binding IsButtonEnable, Converter={StaticResource BooleanToVisibilityConverter}}" IsEnabled="{Binding Path=IsButtonEnable, Mode=TwoWay}" Command="{Binding UpdateCommand}" Style="{StaticResource CmdButton}" />
+        <Button Content="Delete" Grid.Column="2" Grid.Row="1" Visibility= "{Binding IsButtonEnable, Converter={StaticResource BooleanToVisibilityConverter}}" IsEnabled="{Binding Path=IsButtonEnable, Mode=TwoWay}" Command="{Binding DeleteCommand}" Style="{StaticResource CmdButton}" />
         <Button Content="Exit" Grid.Column="4" Grid.Row="1" Command="{Binding ExitCommand}" Style="{StaticResource CmdButton}" />
     </Grid>
 </Window>

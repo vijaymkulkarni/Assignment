@@ -11,16 +11,6 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ContactMgmtService", "Conta
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UnitTestProject1", "UnitTestProject1\UnitTestProject1.csproj", "{4C888C1F-8FEA-4A7E-8D4F-D403F2F8376E}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Application Release", "Application Release", "{17D8F052-8795-4BC0-AFF1-6136E6BB5319}"
-	ProjectSection(SolutionItems) = preProject
-		Final_Application\ContactMgmt.exe = Final_Application\ContactMgmt.exe
-		Final_Application\ContactMgmt.exe.config = Final_Application\ContactMgmt.exe.config
-		Final_Application\ContactMgmtCommon.dll = Final_Application\ContactMgmtCommon.dll
-		Final_Application\ContactMgmtSerivce.dll = Final_Application\ContactMgmtSerivce.dll
-		Final_Application\contacts.xml = Final_Application\contacts.xml
-		Final_Application\logins.xml = Final_Application\logins.xml
-	EndProjectSection
-EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
